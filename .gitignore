@@ -1,0 +1,16 @@
+**/.vs
+**/bin
+**/obj
+CovidCertificate.Backend.sln.DotSettings.user
+*.Cache
+/CovidCertificate.Azure.Resources.Tests/packages.lock.json
+/CovidCertificate.Backend.Auth/packages.lock.json
+/CovidCertificate.Backend.DASigningService/packages.lock.json
+/CovidCertificate.Backend.Auth.Tests/packages.lock.json
+/CovidCertificate.Backend/packages.lock.json
+/CovidCertificate.Backend.DASigningService.Tests/packages.lock.json
+/CovidCertificate.Backend.International.Tests/packages.lock.json
+/CovidCertificate.Backend.PKINationalBackend/packages.lock.json
+/CovidCertificate.Backend.Services/packages.lock.json
+*.lock.json
+launchSettings.json

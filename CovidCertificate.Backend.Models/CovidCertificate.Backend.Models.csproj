@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Hl7.Fhir.R4" Version="4.3.0" />
+    <PackageReference Include="MongoDB.Bson" Version="2.18.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CovidCertificate.Utils\CovidCertificate.Backend.Utils.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="RequestDtos\AddInternationalPdfRequestDto - Copy.cs" />
+    <Compile Remove="RequestDtos\InternationalPdfServiceBusRequestDto.cs" />
+  </ItemGroup>
+
+</Project>

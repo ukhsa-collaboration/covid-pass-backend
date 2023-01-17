@@ -1,0 +1,53 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Remove="Settings\appConfigurationLocal.json" />
+        <None Remove="Settings\secrets.json" />
+        <None Remove="Settings\FeatureManagement.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="Settings\appConfigurationLocal.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="Settings\secrets.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="Settings\FeatureManagement.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="Settings\googleaccount.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+
+
+    <ItemGroup>
+        <PackageReference Include="Azure.Data.AppConfiguration" Version="1.2.0" />
+        <PackageReference Include="Azure.Extensions.AspNetCore.Configuration.Secrets" Version="1.2.2" />
+        <PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="1.1.0" />
+        <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.AzureAppConfiguration" Version="5.1.0" />
+        <PackageReference Include="Microsoft.FeatureManagement" Version="2.5.1" />
+        <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\CovidCertificate.Backend.Interfaces\CovidCertificate.Backend.Interfaces.csproj" />
+        <ProjectReference Include="..\CovidCertificate.Backend.Models\CovidCertificate.Backend.Models.csproj" />
+        <ProjectReference Include="..\CovidCertificate.Backend.Services\CovidCertificate.Backend.Services.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="Settings\googleaccount.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
+</Project>

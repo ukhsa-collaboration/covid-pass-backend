@@ -1,0 +1,347 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CovidCertificate.Backend.Models", "CovidCertificate.Backend.Models\CovidCertificate.Backend.Models.csproj", "{5C2883C3-1AD8-4A18-9334-983895D441FC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CovidCertificate.Backend.Services", "CovidCertificate.Backend.Services\CovidCertificate.Backend.Services.csproj", "{5BADDA6A-FC42-461E-AEAE-2BAEBBCE5CCF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CovidCertificate.Backend.Interfaces", "CovidCertificate.Backend.Interfaces\CovidCertificate.Backend.Interfaces.csproj", "{DF9FDCA8-5086-415E-9A2B-FF2AD9622411}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CovidCertificate.Backend.Tests", "CovidCertificate.Backend.Tests\CovidCertificate.Backend.Tests.csproj", "{3FF78F10-05FF-42DD-BDBB-DA5D3AB505E0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{28EAA8E1-4E5A-47AB-A730-621D3D2780B4} = {28EAA8E1-4E5A-47AB-A730-621D3D2780B4}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CovidCertificate.Backend", "CovidCertificate.Backend\CovidCertificate.Backend.csproj", "{CD6AE086-02CA-41A2-93C5-F6B2A05C5940}"
+	ProjectSection(ProjectDependencies) = postProject
+		{55581E0C-6E08-4687-897B-A09692DB1334} = {55581E0C-6E08-4687-897B-A09692DB1334}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CovidCertificate.Backend.Utils", "CovidCertificate.Utils\CovidCertificate.Backend.Utils.csproj", "{901FB824-82E4-4A11-A85E-65B4EC17E2E8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CovidCertificate.Backend.IngestionPipelines", "CovidCertificate.IngestionPipelines\CovidCertificate.Backend.IngestionPipelines.csproj", "{138C15E0-CAA5-4752-A29E-E155679B6E8F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CovidCertificate.Backend.Configuration", "CovidCertificate.Configuration\CovidCertificate.Backend.Configuration.csproj", "{9565C256-CF41-41A0-B824-B91FD0EA75E1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{24549DA1-0571-4A2C-BE01-3285E5224C22}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+		nuget.config = nuget.config
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CovidCertificate.Backend.Auth", "CovidCertificate.Backend.Auth\CovidCertificate.Backend.Auth.csproj", "{B9F7F7DC-FE54-40C6-A0B9-999340FD237B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CovidCertificate.Backend.Auth.Tests", "CovidCertificate.Backend.Auth.Tests\CovidCertificate.Backend.Auth.Tests.csproj", "{E33AA3EF-21F2-43E7-9DFA-495E74F751DF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CovidCertificate.Backend.NhsApiIntegration", "CovidCertificate.Backend.NhsApiIntegration\CovidCertificate.Backend.NhsApiIntegration.csproj", "{782D6384-5B26-49C6-BD29-07AB8A03F089}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CovidCertificate.Backend.International", "CovidPassport.Backend.International\CovidCertificate.Backend.International.csproj", "{55581E0C-6E08-4687-897B-A09692DB1334}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CovidCertificate.Backend.International.Tests", "CovidCertificate.Backend.International.Tests\CovidCertificate.Backend.International.Tests.csproj", "{28EAA8E1-4E5A-47AB-A730-621D3D2780B4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{55581E0C-6E08-4687-897B-A09692DB1334} = {55581E0C-6E08-4687-897B-A09692DB1334}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CovidCertificate.Backend.NhsApiIntegration.Tests", "CovidCertificate.Backend.NhsApiIntegration.Tests\CovidCertificate.Backend.NhsApiIntegration.Tests.csproj", "{DEF4F51A-94D1-4BFF-8933-4FE358BFC4B5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cert-ingest-fa", "cert-ingest-fa", "{8CF379E2-B62C-406A-92C4-85C5FCEA29B7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{6049F611-A95A-4C51-9FBA-FD367B5085AC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "auth-fa", "auth-fa", "{D611F28E-FDFC-40BE-9B7A-43D51CA4A49B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cert-fa", "cert-fa", "{D74C0705-D76C-4AE2-8791-20138C682B1C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{EF3E6B46-B0D1-4C1D-9690-1A17E223E2DB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "international-fa", "international-fa", "{B0E64E44-E6DA-47A0-8ECF-9D6E2C0AA79B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CovidCertificate.Backend.DASigningService", "CovidCertificate.Backend.DASigningService\CovidCertificate.Backend.DASigningService.csproj", "{0BB79868-809B-46FD-B8B0-D15AAC7F5BA9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "da-signing-service-fa", "da-signing-service-fa", "{5C6D2916-5B41-4F8D-AB77-4A5BDCE46DB2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "azure-resources", "azure-resources", "{CA747CB5-3C75-4809-B26D-33DE5672F30F}"
+	ProjectSection(SolutionItems) = preProject
+		CovidCertificate.Azure.Resources\test-results-mapping.json = CovidCertificate.Azure.Resources\test-results-mapping.json
+		CovidCertificate.Azure.Resources\vaccine-results-mapping.json = CovidCertificate.Azure.Resources\vaccine-results-mapping.json
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CovidCertificate.Backend.DASigningService.Tests", "CovidCertificate.Backend.DASigningService.Tests\CovidCertificate.Backend.DASigningService.Tests.csproj", "{6AA62DB7-533F-48BA-9346-D4E9DCC1F839}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CovidCertificate.Azure.Resources.Tests", "CovidCertificate.Azure.Resources.Tests\CovidCertificate.Azure.Resources.Tests.csproj", "{2A8E390E-1632-465C-8DFB-8BA276DA88E6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "email-views", "email-views", "{664EA2B4-FCD6-48FF-8EA7-7B358CC12BCC}"
+	ProjectSection(SolutionItems) = preProject
+		CovidCertificate.Azure.Resources\email-views\cy-footer.hbs = CovidCertificate.Azure.Resources\email-views\cy-footer.hbs
+		CovidCertificate.Azure.Resources\email-views\cy-header.hbs = CovidCertificate.Azure.Resources\email-views\cy-header.hbs
+		CovidCertificate.Azure.Resources\email-views\cy-international-recovery.hbs = CovidCertificate.Azure.Resources\email-views\cy-international-recovery.hbs
+		CovidCertificate.Azure.Resources\email-views\cy-international-styling.hbs = CovidCertificate.Azure.Resources\email-views\cy-international-styling.hbs
+		CovidCertificate.Azure.Resources\email-views\cy-international-vaccine.hbs = CovidCertificate.Azure.Resources\email-views\cy-international-vaccine.hbs
+		CovidCertificate.Azure.Resources\email-views\cy-one-pass = CovidCertificate.Azure.Resources\email-views\cy-one-pass
+		CovidCertificate.Azure.Resources\email-views\cy-two-pass = CovidCertificate.Azure.Resources\email-views\cy-two-pass
+		CovidCertificate.Azure.Resources\email-views\cy-two-pass-wales-only = CovidCertificate.Azure.Resources\email-views\cy-two-pass-wales-only
+		CovidCertificate.Azure.Resources\email-views\en-footer.hbs = CovidCertificate.Azure.Resources\email-views\en-footer.hbs
+		CovidCertificate.Azure.Resources\email-views\en-header.hbs = CovidCertificate.Azure.Resources\email-views\en-header.hbs
+		CovidCertificate.Azure.Resources\email-views\en-international-recovery.hbs = CovidCertificate.Azure.Resources\email-views\en-international-recovery.hbs
+		CovidCertificate.Azure.Resources\email-views\en-international-styling.hbs = CovidCertificate.Azure.Resources\email-views\en-international-styling.hbs
+		CovidCertificate.Azure.Resources\email-views\en-international-vaccine.hbs = CovidCertificate.Azure.Resources\email-views\en-international-vaccine.hbs
+		CovidCertificate.Azure.Resources\email-views\en-one-pass = CovidCertificate.Azure.Resources\email-views\en-one-pass
+		CovidCertificate.Azure.Resources\email-views\en-two-pass = CovidCertificate.Azure.Resources\email-views\en-two-pass
+		CovidCertificate.Azure.Resources\email-views\en-two-pass-wales-only = CovidCertificate.Azure.Resources\email-views\en-two-pass-wales-only
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pass-views", "pass-views", "{4D0C9EBE-5DB9-48DE-A6E8-D93B8C5C791C}"
+	ProjectSection(SolutionItems) = preProject
+		CovidCertificate.Azure.Resources\pass-views\cy-recovery = CovidCertificate.Azure.Resources\pass-views\cy-recovery
+		CovidCertificate.Azure.Resources\pass-views\cy-terms = CovidCertificate.Azure.Resources\pass-views\cy-terms
+		CovidCertificate.Azure.Resources\pass-views\cy-vaccine = CovidCertificate.Azure.Resources\pass-views\cy-vaccine
+		CovidCertificate.Azure.Resources\pass-views\en-recovery = CovidCertificate.Azure.Resources\pass-views\en-recovery
+		CovidCertificate.Azure.Resources\pass-views\en-terms = CovidCertificate.Azure.Resources\pass-views\en-terms
+		CovidCertificate.Azure.Resources\pass-views\en-vaccine = CovidCertificate.Azure.Resources\pass-views\en-vaccine
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "arm-templates", "arm-templates", "{C69FC81A-D65E-470D-8DF3-0230F2890902}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "apim", "apim", "{FAB13202-3E07-47EC-AB59-EFA6067DAE56}"
+	ProjectSection(SolutionItems) = preProject
+		CovidCertificate.Azure.Resources\arm-templates\apim\apim-template.json = CovidCertificate.Azure.Resources\arm-templates\apim\apim-template.json
+		CovidCertificate.Azure.Resources\arm-templates\apim\apim-template.parameters.healthr-dev-1.json = CovidCertificate.Azure.Resources\arm-templates\apim\apim-template.parameters.healthr-dev-1.json
+		CovidCertificate.Azure.Resources\arm-templates\apim\apim-template.parameters.healthr-dev-2.json = CovidCertificate.Azure.Resources\arm-templates\apim\apim-template.parameters.healthr-dev-2.json
+		CovidCertificate.Azure.Resources\arm-templates\apim\apim-template.parameters.healthr-prod-2.json = CovidCertificate.Azure.Resources\arm-templates\apim\apim-template.parameters.healthr-prod-2.json
+		CovidCertificate.Azure.Resources\arm-templates\apim\apim-template.parameters.healthr-repro-2.json = CovidCertificate.Azure.Resources\arm-templates\apim\apim-template.parameters.healthr-repro-2.json
+		CovidCertificate.Azure.Resources\arm-templates\apim\apim-template.parameters.healthr-sit-1.json = CovidCertificate.Azure.Resources\arm-templates\apim\apim-template.parameters.healthr-sit-1.json
+		CovidCertificate.Azure.Resources\arm-templates\apim\apim-template.parameters.healthr-sit-2.json = CovidCertificate.Azure.Resources\arm-templates\apim\apim-template.parameters.healthr-sit-2.json
+		CovidCertificate.Azure.Resources\arm-templates\apim\apim-template.parameters.healthr-stg-1.json = CovidCertificate.Azure.Resources\arm-templates\apim\apim-template.parameters.healthr-stg-1.json
+		CovidCertificate.Azure.Resources\arm-templates\apim\apim-template.parameters.healthr-stg-2.json = CovidCertificate.Azure.Resources\arm-templates\apim\apim-template.parameters.healthr-stg-2.json
+		CovidCertificate.Azure.Resources\arm-templates\apim\apim-template.parameters.LIVE-healthr-prod-1.json = CovidCertificate.Azure.Resources\arm-templates\apim\apim-template.parameters.LIVE-healthr-prod-1.json
+		CovidCertificate.Azure.Resources\arm-templates\apim\apim-template.parameters.LIVE-healthr-repro-1.json = CovidCertificate.Azure.Resources\arm-templates\apim\apim-template.parameters.LIVE-healthr-repro-1.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "isolation-exemption-fa", "isolation-exemption-fa", "{622202D4-DD33-46F8-AED5-872F7777B679}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CovidCertificate.Backend.IsolationExemptions", "CovidCertificate.Backend.IsolationExemptions\CovidCertificate.Backend.IsolationExemptions.csproj", "{FFA519A5-02DE-419A-A89A-340A2FF82746}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CovidCertificate.Backend.IsolationExemption.Test", "CovidCertificate.Backend.IsolationExemption.Test\CovidCertificate.Backend.IsolationExemption.Test.csproj", "{E23D2452-4414-4933-AAC7-D649611C8932}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pki-national-backend-fa", "pki-national-backend-fa", "{71827866-2B3F-4812-8E4A-B3BC42E40858}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CovidCertificate.Backend.PKINationalBackend", "CovidCertificate.Backend.PKINationalBackend\CovidCertificate.Backend.PKINationalBackend.csproj", "{E19E3E57-728E-497E-A50B-3F4404E14887}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pass-labels", "pass-labels", "{844D6BC4-4369-497F-943F-DD5FFF057824}"
+	ProjectSection(SolutionItems) = preProject
+		CovidCertificate.Azure.Resources\pass-labels\cy.json = CovidCertificate.Azure.Resources\pass-labels\cy.json
+		CovidCertificate.Azure.Resources\pass-labels\en.json = CovidCertificate.Azure.Resources\pass-labels\en.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "eligibility-configuration", "eligibility-configuration", "{598F2273-A491-41C2-9BEA-7DBB551E6AB8}"
+	ProjectSection(SolutionItems) = preProject
+		CovidCertificate.Azure.Resources\eligibility-configuration\eligibility-configuration-mandatory-boosters.json = CovidCertificate.Azure.Resources\eligibility-configuration\eligibility-configuration-mandatory-boosters.json
+		CovidCertificate.Azure.Resources\eligibility-configuration\eligibility-configuration-mandatory.json = CovidCertificate.Azure.Resources\eligibility-configuration\eligibility-configuration-mandatory.json
+		CovidCertificate.Azure.Resources\eligibility-configuration\eligibility-configuration.json = CovidCertificate.Azure.Resources\eligibility-configuration\eligibility-configuration.json
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CovidCertificate.Backend.LoginMock", "CovidCertificate.Backend.LoginMock\CovidCertificate.Backend.LoginMock.csproj", "{47BDF086-02CA-48CA-8388-019B2309F907}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CovidCertificate.Backend.PKINationalBackend.Tests", "CovidCertificate.Backend.PKINationalBackend.Tests\CovidCertificate.Backend.PKINationalBackend.Tests.csproj", "{689DC31D-8BE3-43B2-8C2B-5C848321DA59}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cosmosdb", "cosmosdb", "{C292C985-518E-463B-9B2F-26C8A52386D6}"
+	ProjectSection(SolutionItems) = preProject
+		CovidCertificate.Azure.Resources\arm-templates\cosmosdb\cosmosdb-template.json = CovidCertificate.Azure.Resources\arm-templates\cosmosdb\cosmosdb-template.json
+		CovidCertificate.Azure.Resources\arm-templates\cosmosdb\cosmosdb-template.parameters.healthr-dev-1.json = CovidCertificate.Azure.Resources\arm-templates\cosmosdb\cosmosdb-template.parameters.healthr-dev-1.json
+		CovidCertificate.Azure.Resources\arm-templates\cosmosdb\cosmosdb-template.parameters.healthr-dev-2.json = CovidCertificate.Azure.Resources\arm-templates\cosmosdb\cosmosdb-template.parameters.healthr-dev-2.json
+		CovidCertificate.Azure.Resources\arm-templates\cosmosdb\cosmosdb-template.parameters.healthr-prod-2.json = CovidCertificate.Azure.Resources\arm-templates\cosmosdb\cosmosdb-template.parameters.healthr-prod-2.json
+		CovidCertificate.Azure.Resources\arm-templates\cosmosdb\cosmosdb-template.parameters.healthr-repro-2.json = CovidCertificate.Azure.Resources\arm-templates\cosmosdb\cosmosdb-template.parameters.healthr-repro-2.json
+		CovidCertificate.Azure.Resources\arm-templates\cosmosdb\cosmosdb-template.parameters.healthr-sit-1.json = CovidCertificate.Azure.Resources\arm-templates\cosmosdb\cosmosdb-template.parameters.healthr-sit-1.json
+		CovidCertificate.Azure.Resources\arm-templates\cosmosdb\cosmosdb-template.parameters.healthr-sit-2.json = CovidCertificate.Azure.Resources\arm-templates\cosmosdb\cosmosdb-template.parameters.healthr-sit-2.json
+		CovidCertificate.Azure.Resources\arm-templates\cosmosdb\cosmosdb-template.parameters.healthr-stg-1.json = CovidCertificate.Azure.Resources\arm-templates\cosmosdb\cosmosdb-template.parameters.healthr-stg-1.json
+		CovidCertificate.Azure.Resources\arm-templates\cosmosdb\cosmosdb-template.parameters.healthr-stg-2.json = CovidCertificate.Azure.Resources\arm-templates\cosmosdb\cosmosdb-template.parameters.healthr-stg-2.json
+		CovidCertificate.Azure.Resources\arm-templates\cosmosdb\cosmosdb-template.parameters.LIVE-healthr-prod-1.json = CovidCertificate.Azure.Resources\arm-templates\cosmosdb\cosmosdb-template.parameters.LIVE-healthr-prod-1.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "eu-value-sets", "eu-value-sets", "{0A111A92-3A51-4AA4-8582-EA2D5E7240A9}"
+	ProjectSection(SolutionItems) = preProject
+		CovidCertificate.Azure.Resources\eu-value-sets\eu-value-sets.json = CovidCertificate.Azure.Resources\eu-value-sets\eu-value-sets.json
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CovidCertificate.Backend.UnattendedCertificate", "CovidCertificate.Backend.UnattendedCertificate\CovidCertificate.Backend.UnattendedCertificate.csproj", "{A775BC25-8694-4B4A-8E34-9107E755E164}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "unattended-fa", "unattended-fa", "{EF7E7BBC-0636-4379-B39E-8F423B527559}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "domestic-policies", "domestic-policies", "{3A1C1DFD-D64D-406E-BEF1-4F991BA2CF4E}"
+	ProjectSection(SolutionItems) = preProject
+		CovidCertificate.Azure.Resources\domestic-policies\GB-ENG.json = CovidCertificate.Azure.Resources\domestic-policies\GB-ENG.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "function-apps", "function-apps", "{8A519590-90D1-4785-87DC-98F83D7E500B}"
+	ProjectSection(SolutionItems) = preProject
+		CovidCertificate.Azure.Resources\arm-templates\function-apps\function-app-template.json = CovidCertificate.Azure.Resources\arm-templates\function-apps\function-app-template.json
+		CovidCertificate.Azure.Resources\arm-templates\function-apps\function-app-template.parameters.healthr-dev-1.json = CovidCertificate.Azure.Resources\arm-templates\function-apps\function-app-template.parameters.healthr-dev-1.json
+		CovidCertificate.Azure.Resources\arm-templates\function-apps\function-app-template.parameters.healthr-dev-2.json = CovidCertificate.Azure.Resources\arm-templates\function-apps\function-app-template.parameters.healthr-dev-2.json
+		CovidCertificate.Azure.Resources\arm-templates\function-apps\function-app-template.parameters.healthr-prod-2.json = CovidCertificate.Azure.Resources\arm-templates\function-apps\function-app-template.parameters.healthr-prod-2.json
+		CovidCertificate.Azure.Resources\arm-templates\function-apps\function-app-template.parameters.healthr-repro-2.json = CovidCertificate.Azure.Resources\arm-templates\function-apps\function-app-template.parameters.healthr-repro-2.json
+		CovidCertificate.Azure.Resources\arm-templates\function-apps\function-app-template.parameters.healthr-sit-1.json = CovidCertificate.Azure.Resources\arm-templates\function-apps\function-app-template.parameters.healthr-sit-1.json
+		CovidCertificate.Azure.Resources\arm-templates\function-apps\function-app-template.parameters.healthr-sit-2.json = CovidCertificate.Azure.Resources\arm-templates\function-apps\function-app-template.parameters.healthr-sit-2.json
+		CovidCertificate.Azure.Resources\arm-templates\function-apps\function-app-template.parameters.healthr-stg-1.json = CovidCertificate.Azure.Resources\arm-templates\function-apps\function-app-template.parameters.healthr-stg-1.json
+		CovidCertificate.Azure.Resources\arm-templates\function-apps\function-app-template.parameters.healthr-stg-2.json = CovidCertificate.Azure.Resources\arm-templates\function-apps\function-app-template.parameters.healthr-stg-2.json
+		CovidCertificate.Azure.Resources\arm-templates\function-apps\function-app-template.parameters.LIVE-healthr-prod.json = CovidCertificate.Azure.Resources\arm-templates\function-apps\function-app-template.parameters.LIVE-healthr-prod.json
+		CovidCertificate.Azure.Resources\arm-templates\function-apps\function-app-template.parameters.LIVE-healthr-repro.json = CovidCertificate.Azure.Resources\arm-templates\function-apps\function-app-template.parameters.LIVE-healthr-repro.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mocks-fa", "mocks-fa", "{38E3AE78-1914-46EA-987D-94C5963CB7A6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CovidCertificate.Backend.Mocks", "CovidCertificate.Backend.Mocks\CovidCertificate.Backend.Mocks.csproj", "{AFAF8736-4E61-4F31-AF39-07CAD435AC81}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CovidCertificate.Backend.UnattendedCertificate.Tests", "CovidCertificate.Backend.Backend.UnattendedCertificate.Tests\CovidCertificate.Backend.UnattendedCertificate.Tests.csproj", "{C1E3A0CE-DE72-4DAC-B4BE-0AA46854D5E0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5C2883C3-1AD8-4A18-9334-983895D441FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C2883C3-1AD8-4A18-9334-983895D441FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C2883C3-1AD8-4A18-9334-983895D441FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C2883C3-1AD8-4A18-9334-983895D441FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BADDA6A-FC42-461E-AEAE-2BAEBBCE5CCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BADDA6A-FC42-461E-AEAE-2BAEBBCE5CCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BADDA6A-FC42-461E-AEAE-2BAEBBCE5CCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BADDA6A-FC42-461E-AEAE-2BAEBBCE5CCF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF9FDCA8-5086-415E-9A2B-FF2AD9622411}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF9FDCA8-5086-415E-9A2B-FF2AD9622411}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF9FDCA8-5086-415E-9A2B-FF2AD9622411}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF9FDCA8-5086-415E-9A2B-FF2AD9622411}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FF78F10-05FF-42DD-BDBB-DA5D3AB505E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FF78F10-05FF-42DD-BDBB-DA5D3AB505E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FF78F10-05FF-42DD-BDBB-DA5D3AB505E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FF78F10-05FF-42DD-BDBB-DA5D3AB505E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD6AE086-02CA-41A2-93C5-F6B2A05C5940}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD6AE086-02CA-41A2-93C5-F6B2A05C5940}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD6AE086-02CA-41A2-93C5-F6B2A05C5940}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD6AE086-02CA-41A2-93C5-F6B2A05C5940}.Release|Any CPU.Build.0 = Release|Any CPU
+		{901FB824-82E4-4A11-A85E-65B4EC17E2E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{901FB824-82E4-4A11-A85E-65B4EC17E2E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{901FB824-82E4-4A11-A85E-65B4EC17E2E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{901FB824-82E4-4A11-A85E-65B4EC17E2E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{138C15E0-CAA5-4752-A29E-E155679B6E8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{138C15E0-CAA5-4752-A29E-E155679B6E8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{138C15E0-CAA5-4752-A29E-E155679B6E8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{138C15E0-CAA5-4752-A29E-E155679B6E8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9565C256-CF41-41A0-B824-B91FD0EA75E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9565C256-CF41-41A0-B824-B91FD0EA75E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9565C256-CF41-41A0-B824-B91FD0EA75E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9565C256-CF41-41A0-B824-B91FD0EA75E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9F7F7DC-FE54-40C6-A0B9-999340FD237B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9F7F7DC-FE54-40C6-A0B9-999340FD237B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9F7F7DC-FE54-40C6-A0B9-999340FD237B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9F7F7DC-FE54-40C6-A0B9-999340FD237B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E33AA3EF-21F2-43E7-9DFA-495E74F751DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E33AA3EF-21F2-43E7-9DFA-495E74F751DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E33AA3EF-21F2-43E7-9DFA-495E74F751DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E33AA3EF-21F2-43E7-9DFA-495E74F751DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{782D6384-5B26-49C6-BD29-07AB8A03F089}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{782D6384-5B26-49C6-BD29-07AB8A03F089}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{782D6384-5B26-49C6-BD29-07AB8A03F089}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{782D6384-5B26-49C6-BD29-07AB8A03F089}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55581E0C-6E08-4687-897B-A09692DB1334}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55581E0C-6E08-4687-897B-A09692DB1334}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55581E0C-6E08-4687-897B-A09692DB1334}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55581E0C-6E08-4687-897B-A09692DB1334}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28EAA8E1-4E5A-47AB-A730-621D3D2780B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28EAA8E1-4E5A-47AB-A730-621D3D2780B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28EAA8E1-4E5A-47AB-A730-621D3D2780B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28EAA8E1-4E5A-47AB-A730-621D3D2780B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEF4F51A-94D1-4BFF-8933-4FE358BFC4B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEF4F51A-94D1-4BFF-8933-4FE358BFC4B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEF4F51A-94D1-4BFF-8933-4FE358BFC4B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEF4F51A-94D1-4BFF-8933-4FE358BFC4B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BB79868-809B-46FD-B8B0-D15AAC7F5BA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BB79868-809B-46FD-B8B0-D15AAC7F5BA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BB79868-809B-46FD-B8B0-D15AAC7F5BA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BB79868-809B-46FD-B8B0-D15AAC7F5BA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AA62DB7-533F-48BA-9346-D4E9DCC1F839}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AA62DB7-533F-48BA-9346-D4E9DCC1F839}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AA62DB7-533F-48BA-9346-D4E9DCC1F839}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AA62DB7-533F-48BA-9346-D4E9DCC1F839}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A8E390E-1632-465C-8DFB-8BA276DA88E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A8E390E-1632-465C-8DFB-8BA276DA88E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A8E390E-1632-465C-8DFB-8BA276DA88E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A8E390E-1632-465C-8DFB-8BA276DA88E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFA519A5-02DE-419A-A89A-340A2FF82746}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFA519A5-02DE-419A-A89A-340A2FF82746}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFA519A5-02DE-419A-A89A-340A2FF82746}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFA519A5-02DE-419A-A89A-340A2FF82746}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E23D2452-4414-4933-AAC7-D649611C8932}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E23D2452-4414-4933-AAC7-D649611C8932}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E23D2452-4414-4933-AAC7-D649611C8932}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E23D2452-4414-4933-AAC7-D649611C8932}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E19E3E57-728E-497E-A50B-3F4404E14887}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E19E3E57-728E-497E-A50B-3F4404E14887}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E19E3E57-728E-497E-A50B-3F4404E14887}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E19E3E57-728E-497E-A50B-3F4404E14887}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47BDF086-02CA-48CA-8388-019B2309F907}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47BDF086-02CA-48CA-8388-019B2309F907}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47BDF086-02CA-48CA-8388-019B2309F907}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47BDF086-02CA-48CA-8388-019B2309F907}.Release|Any CPU.Build.0 = Release|Any CPU
+		{689DC31D-8BE3-43B2-8C2B-5C848321DA59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{689DC31D-8BE3-43B2-8C2B-5C848321DA59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{689DC31D-8BE3-43B2-8C2B-5C848321DA59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{689DC31D-8BE3-43B2-8C2B-5C848321DA59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A775BC25-8694-4B4A-8E34-9107E755E164}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A775BC25-8694-4B4A-8E34-9107E755E164}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A775BC25-8694-4B4A-8E34-9107E755E164}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A775BC25-8694-4B4A-8E34-9107E755E164}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFAF8736-4E61-4F31-AF39-07CAD435AC81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFAF8736-4E61-4F31-AF39-07CAD435AC81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFAF8736-4E61-4F31-AF39-07CAD435AC81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFAF8736-4E61-4F31-AF39-07CAD435AC81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1E3A0CE-DE72-4DAC-B4BE-0AA46854D5E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1E3A0CE-DE72-4DAC-B4BE-0AA46854D5E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1E3A0CE-DE72-4DAC-B4BE-0AA46854D5E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1E3A0CE-DE72-4DAC-B4BE-0AA46854D5E0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5C2883C3-1AD8-4A18-9334-983895D441FC} = {6049F611-A95A-4C51-9FBA-FD367B5085AC}
+		{5BADDA6A-FC42-461E-AEAE-2BAEBBCE5CCF} = {6049F611-A95A-4C51-9FBA-FD367B5085AC}
+		{DF9FDCA8-5086-415E-9A2B-FF2AD9622411} = {6049F611-A95A-4C51-9FBA-FD367B5085AC}
+		{3FF78F10-05FF-42DD-BDBB-DA5D3AB505E0} = {EF3E6B46-B0D1-4C1D-9690-1A17E223E2DB}
+		{CD6AE086-02CA-41A2-93C5-F6B2A05C5940} = {D74C0705-D76C-4AE2-8791-20138C682B1C}
+		{901FB824-82E4-4A11-A85E-65B4EC17E2E8} = {6049F611-A95A-4C51-9FBA-FD367B5085AC}
+		{138C15E0-CAA5-4752-A29E-E155679B6E8F} = {8CF379E2-B62C-406A-92C4-85C5FCEA29B7}
+		{9565C256-CF41-41A0-B824-B91FD0EA75E1} = {6049F611-A95A-4C51-9FBA-FD367B5085AC}
+		{B9F7F7DC-FE54-40C6-A0B9-999340FD237B} = {D611F28E-FDFC-40BE-9B7A-43D51CA4A49B}
+		{E33AA3EF-21F2-43E7-9DFA-495E74F751DF} = {EF3E6B46-B0D1-4C1D-9690-1A17E223E2DB}
+		{782D6384-5B26-49C6-BD29-07AB8A03F089} = {6049F611-A95A-4C51-9FBA-FD367B5085AC}
+		{55581E0C-6E08-4687-897B-A09692DB1334} = {B0E64E44-E6DA-47A0-8ECF-9D6E2C0AA79B}
+		{28EAA8E1-4E5A-47AB-A730-621D3D2780B4} = {EF3E6B46-B0D1-4C1D-9690-1A17E223E2DB}
+		{DEF4F51A-94D1-4BFF-8933-4FE358BFC4B5} = {EF3E6B46-B0D1-4C1D-9690-1A17E223E2DB}
+		{0BB79868-809B-46FD-B8B0-D15AAC7F5BA9} = {5C6D2916-5B41-4F8D-AB77-4A5BDCE46DB2}
+		{6AA62DB7-533F-48BA-9346-D4E9DCC1F839} = {EF3E6B46-B0D1-4C1D-9690-1A17E223E2DB}
+		{2A8E390E-1632-465C-8DFB-8BA276DA88E6} = {EF3E6B46-B0D1-4C1D-9690-1A17E223E2DB}
+		{664EA2B4-FCD6-48FF-8EA7-7B358CC12BCC} = {CA747CB5-3C75-4809-B26D-33DE5672F30F}
+		{4D0C9EBE-5DB9-48DE-A6E8-D93B8C5C791C} = {CA747CB5-3C75-4809-B26D-33DE5672F30F}
+		{C69FC81A-D65E-470D-8DF3-0230F2890902} = {CA747CB5-3C75-4809-B26D-33DE5672F30F}
+		{FAB13202-3E07-47EC-AB59-EFA6067DAE56} = {C69FC81A-D65E-470D-8DF3-0230F2890902}
+		{FFA519A5-02DE-419A-A89A-340A2FF82746} = {622202D4-DD33-46F8-AED5-872F7777B679}
+		{E23D2452-4414-4933-AAC7-D649611C8932} = {EF3E6B46-B0D1-4C1D-9690-1A17E223E2DB}
+		{E19E3E57-728E-497E-A50B-3F4404E14887} = {71827866-2B3F-4812-8E4A-B3BC42E40858}
+		{844D6BC4-4369-497F-943F-DD5FFF057824} = {CA747CB5-3C75-4809-B26D-33DE5672F30F}
+		{598F2273-A491-41C2-9BEA-7DBB551E6AB8} = {CA747CB5-3C75-4809-B26D-33DE5672F30F}
+		{689DC31D-8BE3-43B2-8C2B-5C848321DA59} = {EF3E6B46-B0D1-4C1D-9690-1A17E223E2DB}
+		{C292C985-518E-463B-9B2F-26C8A52386D6} = {C69FC81A-D65E-470D-8DF3-0230F2890902}
+		{0A111A92-3A51-4AA4-8582-EA2D5E7240A9} = {CA747CB5-3C75-4809-B26D-33DE5672F30F}
+		{A775BC25-8694-4B4A-8E34-9107E755E164} = {EF7E7BBC-0636-4379-B39E-8F423B527559}
+		{3A1C1DFD-D64D-406E-BEF1-4F991BA2CF4E} = {CA747CB5-3C75-4809-B26D-33DE5672F30F}
+		{8A519590-90D1-4785-87DC-98F83D7E500B} = {C69FC81A-D65E-470D-8DF3-0230F2890902}
+		{AFAF8736-4E61-4F31-AF39-07CAD435AC81} = {38E3AE78-1914-46EA-987D-94C5963CB7A6}
+		{C1E3A0CE-DE72-4DAC-B4BE-0AA46854D5E0} = {EF3E6B46-B0D1-4C1D-9690-1A17E223E2DB}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BCFD3BB8-B6E4-402A-9FF9-088DD9CCD78E}
+	EndGlobalSection
+EndGlobal
