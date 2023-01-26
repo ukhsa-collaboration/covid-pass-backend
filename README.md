@@ -27,7 +27,7 @@ To clone the repository:
 
 ## For More Information
 
-If you have further questions about the NHS COVID Pass service please email covidcertstatuspmo@nhsx.nhs.uk
+If you have further questions about the NHS COVID Pass service please email covidcertstatuspmo@nhsbsa.nhs.uk
 
 **Link to the licence file**
 
