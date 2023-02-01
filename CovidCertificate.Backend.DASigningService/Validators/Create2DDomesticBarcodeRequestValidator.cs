@@ -3,6 +3,7 @@ using System.Linq;
 using CovidCertificate.Backend.DASigningService.ErrorHandling;
 using CovidCertificate.Backend.DASigningService.Requests;
 using CovidCertificate.Backend.Utils;
+using CovidCertificate.Backend.Utils.Constants;
 using CovidCertificate.Backend.Utils.Extensions;
 using FluentValidation;
 using Microsoft.Extensions.Configuration;
@@ -23,7 +24,7 @@ namespace CovidCertificate.Backend.DASigningService.Validators
             RuleFor(x => x.RegionSubscriptionNameHeader)
                 .NotEmpty()
                 .WithMessage(
-                    $"Missing header '{DevolvedAdministrationBarcodeGeneratorFunction.RegionSubscriptionNameHeader}'")
+                    $"Missing header '{HeaderConsts.RegionSubscriptionNameHeader}'")
                 .WithErrorCode(ErrorCode.UNEXPECTED_SYSTEM_ERROR.ToString(StringUtils.NumberFormattedEnumFormat));
 
             RuleFor(x => x.Body)

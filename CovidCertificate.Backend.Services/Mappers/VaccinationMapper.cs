@@ -18,8 +18,8 @@ namespace CovidCertificate.Backend.Services.Mappers
 {
     public class VaccinationMapper : IVaccinationMapper
     {
-        private const string BlobContainerNameConfigKey = "BlobContainerNameVaccineMappings";
-        private const string BlobFileNameConfigKey = "BlobFileNameVaccineMappings";
+        public const string BlobContainerNameConfigKey = "BlobContainerNameVaccineMappings";
+        public const string BlobFileNameConfigKey = "BlobFileNameVaccineMappings";
 
         private readonly IBlobFilesInMemoryCache<VaccineMappings> _mappings;
         private readonly IConfiguration configuration;

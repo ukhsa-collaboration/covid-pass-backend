@@ -195,17 +195,17 @@ namespace CovidCertificate.Backend.Services
             }
             catch (RedisConnectionException rex)
             {
-                logger.LogWarning(LogType.Redis, $"{nameof(RedisConnectionException)} thrown when attempting to get value from Redis cache for key {redisKey}. Exception Message: {rex}.");
+                logger.LogWarning(LogType.Redis, $"{nameof(RedisConnectionException)} thrown when attempting to get value from Redis cache for key {redisKey}. Exception Message: '{rex.Message}'.");
                 return (default(T), false);
             }
             catch (RedisTimeoutException rex)
             {
-                logger.LogWarning(LogType.Redis, $"{nameof(RedisConnectionException)} thrown when attempting to get value from Redis cache for key {redisKey}. Exception Message: {rex}.");
+                logger.LogWarning(LogType.Redis, $"{nameof(RedisConnectionException)} thrown when attempting to get value from Redis cache for key {redisKey}. Exception Message: '{rex.Message}'.");
                 return (default(T), false);
             }
             catch (Exception ex)
             {
-                logger.LogError(LogType.Redis, $"Error in getting value from Redis cache for key {redisKey}.", ex);
+                logger.LogError(LogType.Redis, $"Error in getting value from Redis cache for key {redisKey}. Exception Message: '{ex.Message}'.");
                 return (default(T), false);
             }
         }

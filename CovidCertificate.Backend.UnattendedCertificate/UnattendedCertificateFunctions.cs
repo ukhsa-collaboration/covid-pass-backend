@@ -362,7 +362,7 @@ namespace CovidCertificate.Backend.UnattendedCertificate
                 patient.Identifier.First().Value,
                 patient.Name.First().Family,
                 patient.Name.First().Given.First(),
-                "P9"
+                IdentityProofingLevel.P9
             );
         }
 

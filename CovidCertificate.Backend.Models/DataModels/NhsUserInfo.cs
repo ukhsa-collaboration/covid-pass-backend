@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Security.Claims;
+using CovidCertificate.Backend.Models.Enums;
 
 namespace CovidCertificate.Backend.Models.DataModels
 {
@@ -19,7 +20,7 @@ namespace CovidCertificate.Backend.Models.DataModels
         [JsonProperty("phone_number")]
         public string PhoneNumber { get; private set; }
         [JsonProperty("identity_proofing_level")]
-        public string IdentityProofingLevel { get; private set; }
+        public IdentityProofingLevel IdentityProofingLevel { get; private set; }
         [JsonProperty("phone_number_pds_matched")]
         public string PhoneNumberPdsMatched { get; private set; }
         [JsonProperty("gp_registration_details")]
@@ -41,7 +42,7 @@ namespace CovidCertificate.Backend.Models.DataModels
             }
             claims.AddClaim(new Claim(ClaimTypes.DateOfBirth, Birthdate.ToFileTimeUtc().ToString()));
             claims.AddClaim(new Claim("NHSNumber", NhsNumber));
-            claims.AddClaim(new Claim("IdentityProofingLevel", IdentityProofingLevel));
+            claims.AddClaim(new Claim("IdentityProofingLevel", IdentityProofingLevel.ToString()));
             if (!string.IsNullOrEmpty(PhoneNumberPdsMatched))
             {
                 claims.AddClaim(new Claim("PhoneNumberPdsMatched", PhoneNumberPdsMatched));

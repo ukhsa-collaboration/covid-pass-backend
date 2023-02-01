@@ -45,7 +45,7 @@ namespace CovidCertificate.Backend.DASigningService
             builder.Services.AddSingleton<IEncoderService, EncoderService>();
             builder.Services.AddSingleton<ICondensorService, CondensorService>();
             builder.Services.AddSingleton<ICBORFlow, CBORFlow>();
-            builder.Services.AddSingleton<IClientCertificateValidator, ClientCertificateValidator>();
+            builder.Services.AddSingleton<IThumbprintValidator, ThumbprintValidator>();
             builder.Services.AddScoped<IVaccinationBarcodeGenerator, VaccinationBarcodeGenerator>();
             builder.Services.AddScoped<IRecoveryBarcodeGenerator, RecoveryBarcodeGenerator>();
             builder.Services.AddSingleton<IDomesticBarcodeGenerator, DomesticBarcodeGenerator>();

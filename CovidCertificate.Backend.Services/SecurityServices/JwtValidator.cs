@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CovidCertificate.Backend.Interfaces;
 using CovidCertificate.Backend.Interfaces.JwtServices;
 using CovidCertificate.Backend.Models.DataModels;
+using CovidCertificate.Backend.Models.Enums;
 using CovidCertificate.Backend.Models.Exceptions;
 using CovidCertificate.Backend.Models.Settings;
 using CovidCertificate.Backend.Utils.Extensions;
@@ -21,7 +22,7 @@ namespace CovidCertificate.Backend.Services.SecurityServices
         private readonly IJwtValidationParameterFetcher jwtValidationParameterFetcher;
         private readonly INhsLoginService nhsLoginService;
 
-        private IList<string> AcceptedIdentityProofingLevel { get; set; }
+        private IList<IdentityProofingLevel> AcceptedIdentityProofingLevel { get; set; }
 
         public JwtValidator(ILogger<JwtValidator> logger,
             IPublicKeyService publicKeyService, IJwtValidationParameterFetcher jwtValidationParameterFetcher, NhsLoginSettings nhsLoginSettings, INhsLoginService nhsLoginService)
@@ -58,13 +59,21 @@ namespace CovidCertificate.Backend.Services.SecurityServices
             }
         }
 
-        protected IList<string> GetAccepttedIdentityProofingLevels(string settings)
+        protected IList<IdentityProofingLevel> GetAccepttedIdentityProofingLevels(string settings)
         {
-            var acceptedIdentityProofingLevels = new List<string>();
+            var acceptedIdentityProofingLevels = new List<IdentityProofingLevel>();
             if (!string.IsNullOrEmpty(settings))
             {
                 var levels = settings.Split(';');
-                acceptedIdentityProofingLevels.AddRange(levels);
+                foreach(var level in levels)
+                {
+                    var parsedIdentityProofingLevel = Enum.TryParse(level, true,
+                        out IdentityProofingLevel identityProofingLevel);
+                    if (parsedIdentityProofingLevel)
+                    {
+                        acceptedIdentityProofingLevels.Add(identityProofingLevel);
+                    }
+                }
             }
             return acceptedIdentityProofingLevels;
         }

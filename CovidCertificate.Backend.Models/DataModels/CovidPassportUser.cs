@@ -20,7 +20,7 @@ namespace CovidCertificate.Backend.Models.DataModels
         [JsonConstructor]
         public CovidPassportUser(string name, DateTime dateOfBirth, string emailAddress, string phoneNumber,
                                  string nhsNumber = null, string familyName = null, string givenName = null,
-                                 string identityProofingLevel = null)
+                                 IdentityProofingLevel? identityProofingLevel = null)
         {
             this.Name = name;
             this.DateOfBirth = dateOfBirth;
@@ -29,9 +29,9 @@ namespace CovidCertificate.Backend.Models.DataModels
             this.NhsNumber = nhsNumber;
             this.FamilyName = familyName;
             this.GivenName = givenName;
-            if (identityProofingLevel != null)
+            if (identityProofingLevel.HasValue)
             {
-                this.IdentityProofingLevel = (IdentityProofingLevel)Enum.Parse(typeof(IdentityProofingLevel), identityProofingLevel);
+                this.IdentityProofingLevel = identityProofingLevel.Value;
             }
         }
 
@@ -50,7 +50,7 @@ namespace CovidCertificate.Backend.Models.DataModels
             NhsNumber = claimsPrincipal.FindFirst("NHSNumber")?.Value;
             FamilyName = claimsPrincipal.FindFirst(ClaimTypes.Surname)?.Value;
             GivenName = claimsPrincipal.FindFirst(ClaimTypes.GivenName)?.Value;
-            IdentityProofingLevel = (IdentityProofingLevel)(userProperties?.IdentityProofingLevel);
+            IdentityProofingLevel = userProperties.IdentityProofingLevel;
             GracePeriod = userProperties?.GracePeriod;
             Country = userProperties?.Country;
             DomesticAccessLevel = userProperties?.DomesticAccessLevel;

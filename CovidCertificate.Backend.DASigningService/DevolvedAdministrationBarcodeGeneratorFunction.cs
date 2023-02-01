@@ -27,6 +27,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.FeatureManagement;
 using CovidCertificate.Backend.DASigningService.Models.Exceptions;
 using CovidCertificate.Backend.Models.Helpers;
+using CovidCertificate.Backend.Utils.Constants;
 
 namespace CovidCertificate.Backend.DASigningService
 {
@@ -36,7 +37,6 @@ namespace CovidCertificate.Backend.DASigningService
         private const string RecoveryApiName = "Create2DRecoveryBarcode";
         private const string DomesticApiName = "Create2DDomesticBarcode";
         private const string TestResultsApiName = "Create2DTestResultsBarcode";
-        public const string RegionSubscriptionNameHeader = "Region-Subscription-Name";
 
         private readonly IBarcodeGenerator barcodeGenerator;
         private readonly IRegionConfigService regionConfigService;
@@ -44,7 +44,7 @@ namespace CovidCertificate.Backend.DASigningService
         private readonly IConfigurationRefresher configurationRefresher;
         private readonly IConfiguration configuration;
         private readonly IFeatureManager featureManager;
-        private readonly IClientCertificateValidator clientCertificateValidator;
+        private readonly IThumbprintValidator thumbprintValidator;
         private readonly ILogger<DevolvedAdministrationBarcodeGeneratorFunction> logger;
 
         public DevolvedAdministrationBarcodeGeneratorFunction(
@@ -54,7 +54,7 @@ namespace CovidCertificate.Backend.DASigningService
             ILogger<DevolvedAdministrationBarcodeGeneratorFunction> logger,
             IConfigurationRefresher configurationRefresher,
             IFeatureManager featureManager,
-            IClientCertificateValidator clientCertificateValidator,
+            IThumbprintValidator thumbprintValidator,
             IConfiguration configuration)
         {
             this.barcodeGenerator = barcodeGenerator;
@@ -63,7 +63,7 @@ namespace CovidCertificate.Backend.DASigningService
             this.configurationRefresher = configurationRefresher;
             this.configuration = configuration;
             this.featureManager = featureManager;
-            this.clientCertificateValidator = clientCertificateValidator;
+            this.thumbprintValidator = thumbprintValidator;
             this.logger = logger;
         }
 
@@ -125,7 +125,7 @@ namespace CovidCertificate.Backend.DASigningService
 
                 if ("TLSMA".Equals(req.Headers["Authentication-Method"]))
                 {
-                    clientCertificateValidator.ValidateCertificate(req, errorHandler, regionConfig);
+                    thumbprintValidator.ValidateThumbprint(req, errorHandler);
                 }
 
                 if (errorHandler.HasErrors())
@@ -179,7 +179,7 @@ namespace CovidCertificate.Backend.DASigningService
             {
                 var domesticRequest = new Create2DDomesticBarcodeRequest(configuration);
 
-                domesticRequest.RegionSubscriptionNameHeader = req.Headers[RegionSubscriptionNameHeader];
+                domesticRequest.RegionSubscriptionNameHeader = req.Headers[HeaderConsts.RegionSubscriptionNameHeader];
                 domesticRequest.Body = rawRequestBody;
                 domesticRequest.Policy = req.Query["policy"];
                 domesticRequest.PolicyMask = req.Query["policyMask"];
@@ -192,7 +192,7 @@ namespace CovidCertificate.Backend.DASigningService
                 var internationalRequest = new Create2DBarcodeRequest(configuration);
 
                 internationalRequest.Type = type;
-                internationalRequest.RegionSubscriptionNameHeader = req.Headers[RegionSubscriptionNameHeader];
+                internationalRequest.RegionSubscriptionNameHeader = req.Headers[HeaderConsts.RegionSubscriptionNameHeader];
                 internationalRequest.Body = rawRequestBody;
                 internationalRequest.ValidFrom = req.Query["validFrom"];
                 internationalRequest.ValidTo = req.Query["validTo"];
