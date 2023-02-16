@@ -102,23 +102,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pass-views", "pass-views", 
 		CovidCertificate.Azure.Resources\pass-views\en-vaccine = CovidCertificate.Azure.Resources\pass-views\en-vaccine
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "arm-templates", "arm-templates", "{C69FC81A-D65E-470D-8DF3-0230F2890902}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "apim", "apim", "{FAB13202-3E07-47EC-AB59-EFA6067DAE56}"
-	ProjectSection(SolutionItems) = preProject
-		CovidCertificate.Azure.Resources\arm-templates\apim\apim-template.json = CovidCertificate.Azure.Resources\arm-templates\apim\apim-template.json
-		CovidCertificate.Azure.Resources\arm-templates\apim\apim-template.parameters.healthr-dev-1.json = CovidCertificate.Azure.Resources\arm-templates\apim\apim-template.parameters.healthr-dev-1.json
-		CovidCertificate.Azure.Resources\arm-templates\apim\apim-template.parameters.healthr-dev-2.json = CovidCertificate.Azure.Resources\arm-templates\apim\apim-template.parameters.healthr-dev-2.json
-		CovidCertificate.Azure.Resources\arm-templates\apim\apim-template.parameters.healthr-prod-2.json = CovidCertificate.Azure.Resources\arm-templates\apim\apim-template.parameters.healthr-prod-2.json
-		CovidCertificate.Azure.Resources\arm-templates\apim\apim-template.parameters.healthr-repro-2.json = CovidCertificate.Azure.Resources\arm-templates\apim\apim-template.parameters.healthr-repro-2.json
-		CovidCertificate.Azure.Resources\arm-templates\apim\apim-template.parameters.healthr-sit-1.json = CovidCertificate.Azure.Resources\arm-templates\apim\apim-template.parameters.healthr-sit-1.json
-		CovidCertificate.Azure.Resources\arm-templates\apim\apim-template.parameters.healthr-sit-2.json = CovidCertificate.Azure.Resources\arm-templates\apim\apim-template.parameters.healthr-sit-2.json
-		CovidCertificate.Azure.Resources\arm-templates\apim\apim-template.parameters.healthr-stg-1.json = CovidCertificate.Azure.Resources\arm-templates\apim\apim-template.parameters.healthr-stg-1.json
-		CovidCertificate.Azure.Resources\arm-templates\apim\apim-template.parameters.healthr-stg-2.json = CovidCertificate.Azure.Resources\arm-templates\apim\apim-template.parameters.healthr-stg-2.json
-		CovidCertificate.Azure.Resources\arm-templates\apim\apim-template.parameters.LIVE-healthr-prod-1.json = CovidCertificate.Azure.Resources\arm-templates\apim\apim-template.parameters.LIVE-healthr-prod-1.json
-		CovidCertificate.Azure.Resources\arm-templates\apim\apim-template.parameters.LIVE-healthr-repro-1.json = CovidCertificate.Azure.Resources\arm-templates\apim\apim-template.parameters.LIVE-healthr-repro-1.json
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "isolation-exemption-fa", "isolation-exemption-fa", "{622202D4-DD33-46F8-AED5-872F7777B679}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CovidCertificate.Backend.IsolationExemptions", "CovidCertificate.Backend.IsolationExemptions\CovidCertificate.Backend.IsolationExemptions.csproj", "{FFA519A5-02DE-419A-A89A-340A2FF82746}"
@@ -146,20 +129,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CovidCertificate.Backend.Lo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CovidCertificate.Backend.PKINationalBackend.Tests", "CovidCertificate.Backend.PKINationalBackend.Tests\CovidCertificate.Backend.PKINationalBackend.Tests.csproj", "{689DC31D-8BE3-43B2-8C2B-5C848321DA59}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cosmosdb", "cosmosdb", "{C292C985-518E-463B-9B2F-26C8A52386D6}"
-	ProjectSection(SolutionItems) = preProject
-		CovidCertificate.Azure.Resources\arm-templates\cosmosdb\cosmosdb-template.json = CovidCertificate.Azure.Resources\arm-templates\cosmosdb\cosmosdb-template.json
-		CovidCertificate.Azure.Resources\arm-templates\cosmosdb\cosmosdb-template.parameters.healthr-dev-1.json = CovidCertificate.Azure.Resources\arm-templates\cosmosdb\cosmosdb-template.parameters.healthr-dev-1.json
-		CovidCertificate.Azure.Resources\arm-templates\cosmosdb\cosmosdb-template.parameters.healthr-dev-2.json = CovidCertificate.Azure.Resources\arm-templates\cosmosdb\cosmosdb-template.parameters.healthr-dev-2.json
-		CovidCertificate.Azure.Resources\arm-templates\cosmosdb\cosmosdb-template.parameters.healthr-prod-2.json = CovidCertificate.Azure.Resources\arm-templates\cosmosdb\cosmosdb-template.parameters.healthr-prod-2.json
-		CovidCertificate.Azure.Resources\arm-templates\cosmosdb\cosmosdb-template.parameters.healthr-repro-2.json = CovidCertificate.Azure.Resources\arm-templates\cosmosdb\cosmosdb-template.parameters.healthr-repro-2.json
-		CovidCertificate.Azure.Resources\arm-templates\cosmosdb\cosmosdb-template.parameters.healthr-sit-1.json = CovidCertificate.Azure.Resources\arm-templates\cosmosdb\cosmosdb-template.parameters.healthr-sit-1.json
-		CovidCertificate.Azure.Resources\arm-templates\cosmosdb\cosmosdb-template.parameters.healthr-sit-2.json = CovidCertificate.Azure.Resources\arm-templates\cosmosdb\cosmosdb-template.parameters.healthr-sit-2.json
-		CovidCertificate.Azure.Resources\arm-templates\cosmosdb\cosmosdb-template.parameters.healthr-stg-1.json = CovidCertificate.Azure.Resources\arm-templates\cosmosdb\cosmosdb-template.parameters.healthr-stg-1.json
-		CovidCertificate.Azure.Resources\arm-templates\cosmosdb\cosmosdb-template.parameters.healthr-stg-2.json = CovidCertificate.Azure.Resources\arm-templates\cosmosdb\cosmosdb-template.parameters.healthr-stg-2.json
-		CovidCertificate.Azure.Resources\arm-templates\cosmosdb\cosmosdb-template.parameters.LIVE-healthr-prod-1.json = CovidCertificate.Azure.Resources\arm-templates\cosmosdb\cosmosdb-template.parameters.LIVE-healthr-prod-1.json
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "eu-value-sets", "eu-value-sets", "{0A111A92-3A51-4AA4-8582-EA2D5E7240A9}"
 	ProjectSection(SolutionItems) = preProject
 		CovidCertificate.Azure.Resources\eu-value-sets\eu-value-sets.json = CovidCertificate.Azure.Resources\eu-value-sets\eu-value-sets.json
@@ -172,21 +141,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "domestic-policies", "domestic-policies", "{3A1C1DFD-D64D-406E-BEF1-4F991BA2CF4E}"
 	ProjectSection(SolutionItems) = preProject
 		CovidCertificate.Azure.Resources\domestic-policies\GB-ENG.json = CovidCertificate.Azure.Resources\domestic-policies\GB-ENG.json
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "function-apps", "function-apps", "{8A519590-90D1-4785-87DC-98F83D7E500B}"
-	ProjectSection(SolutionItems) = preProject
-		CovidCertificate.Azure.Resources\arm-templates\function-apps\function-app-template.json = CovidCertificate.Azure.Resources\arm-templates\function-apps\function-app-template.json
-		CovidCertificate.Azure.Resources\arm-templates\function-apps\function-app-template.parameters.healthr-dev-1.json = CovidCertificate.Azure.Resources\arm-templates\function-apps\function-app-template.parameters.healthr-dev-1.json
-		CovidCertificate.Azure.Resources\arm-templates\function-apps\function-app-template.parameters.healthr-dev-2.json = CovidCertificate.Azure.Resources\arm-templates\function-apps\function-app-template.parameters.healthr-dev-2.json
-		CovidCertificate.Azure.Resources\arm-templates\function-apps\function-app-template.parameters.healthr-prod-2.json = CovidCertificate.Azure.Resources\arm-templates\function-apps\function-app-template.parameters.healthr-prod-2.json
-		CovidCertificate.Azure.Resources\arm-templates\function-apps\function-app-template.parameters.healthr-repro-2.json = CovidCertificate.Azure.Resources\arm-templates\function-apps\function-app-template.parameters.healthr-repro-2.json
-		CovidCertificate.Azure.Resources\arm-templates\function-apps\function-app-template.parameters.healthr-sit-1.json = CovidCertificate.Azure.Resources\arm-templates\function-apps\function-app-template.parameters.healthr-sit-1.json
-		CovidCertificate.Azure.Resources\arm-templates\function-apps\function-app-template.parameters.healthr-sit-2.json = CovidCertificate.Azure.Resources\arm-templates\function-apps\function-app-template.parameters.healthr-sit-2.json
-		CovidCertificate.Azure.Resources\arm-templates\function-apps\function-app-template.parameters.healthr-stg-1.json = CovidCertificate.Azure.Resources\arm-templates\function-apps\function-app-template.parameters.healthr-stg-1.json
-		CovidCertificate.Azure.Resources\arm-templates\function-apps\function-app-template.parameters.healthr-stg-2.json = CovidCertificate.Azure.Resources\arm-templates\function-apps\function-app-template.parameters.healthr-stg-2.json
-		CovidCertificate.Azure.Resources\arm-templates\function-apps\function-app-template.parameters.LIVE-healthr-prod.json = CovidCertificate.Azure.Resources\arm-templates\function-apps\function-app-template.parameters.LIVE-healthr-prod.json
-		CovidCertificate.Azure.Resources\arm-templates\function-apps\function-app-template.parameters.LIVE-healthr-repro.json = CovidCertificate.Azure.Resources\arm-templates\function-apps\function-app-template.parameters.LIVE-healthr-repro.json
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mocks-fa", "mocks-fa", "{38E3AE78-1914-46EA-987D-94C5963CB7A6}"
@@ -325,19 +279,15 @@ Global
 		{2A8E390E-1632-465C-8DFB-8BA276DA88E6} = {EF3E6B46-B0D1-4C1D-9690-1A17E223E2DB}
 		{664EA2B4-FCD6-48FF-8EA7-7B358CC12BCC} = {CA747CB5-3C75-4809-B26D-33DE5672F30F}
 		{4D0C9EBE-5DB9-48DE-A6E8-D93B8C5C791C} = {CA747CB5-3C75-4809-B26D-33DE5672F30F}
-		{C69FC81A-D65E-470D-8DF3-0230F2890902} = {CA747CB5-3C75-4809-B26D-33DE5672F30F}
-		{FAB13202-3E07-47EC-AB59-EFA6067DAE56} = {C69FC81A-D65E-470D-8DF3-0230F2890902}
 		{FFA519A5-02DE-419A-A89A-340A2FF82746} = {622202D4-DD33-46F8-AED5-872F7777B679}
 		{E23D2452-4414-4933-AAC7-D649611C8932} = {EF3E6B46-B0D1-4C1D-9690-1A17E223E2DB}
 		{E19E3E57-728E-497E-A50B-3F4404E14887} = {71827866-2B3F-4812-8E4A-B3BC42E40858}
 		{844D6BC4-4369-497F-943F-DD5FFF057824} = {CA747CB5-3C75-4809-B26D-33DE5672F30F}
 		{598F2273-A491-41C2-9BEA-7DBB551E6AB8} = {CA747CB5-3C75-4809-B26D-33DE5672F30F}
 		{689DC31D-8BE3-43B2-8C2B-5C848321DA59} = {EF3E6B46-B0D1-4C1D-9690-1A17E223E2DB}
-		{C292C985-518E-463B-9B2F-26C8A52386D6} = {C69FC81A-D65E-470D-8DF3-0230F2890902}
 		{0A111A92-3A51-4AA4-8582-EA2D5E7240A9} = {CA747CB5-3C75-4809-B26D-33DE5672F30F}
 		{A775BC25-8694-4B4A-8E34-9107E755E164} = {EF7E7BBC-0636-4379-B39E-8F423B527559}
 		{3A1C1DFD-D64D-406E-BEF1-4F991BA2CF4E} = {CA747CB5-3C75-4809-B26D-33DE5672F30F}
-		{8A519590-90D1-4785-87DC-98F83D7E500B} = {C69FC81A-D65E-470D-8DF3-0230F2890902}
 		{AFAF8736-4E61-4F31-AF39-07CAD435AC81} = {38E3AE78-1914-46EA-987D-94C5963CB7A6}
 		{C1E3A0CE-DE72-4DAC-B4BE-0AA46854D5E0} = {EF3E6B46-B0D1-4C1D-9690-1A17E223E2DB}
 	EndGlobalSection

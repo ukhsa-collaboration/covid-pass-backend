@@ -1,6 +1,7 @@
 ﻿using System;
 using CovidCertificate.Backend.DASigningService.Requests.Interfaces;
 using CovidCertificate.Backend.DASigningService.Validators;
+using CovidCertificate.Backend.Interfaces.DateTimeProvider;
 using FluentValidation.Results;
 using Microsoft.Extensions.Configuration;
 
@@ -8,6 +9,8 @@ namespace CovidCertificate.Backend.DASigningService.Requests
 {
     public class Create2DDomesticBarcodeRequest : ICreate2DBarcodeRequest
     {
+        private readonly IDateTimeProviderService dateTimeProviderService;
+
         private IConfiguration configuration;
         private Create2DDomesticBarcodeRequestValidator validator;
 
@@ -18,17 +21,19 @@ namespace CovidCertificate.Backend.DASigningService.Requests
         public string ValidTo { get; set; }
         public string Body { get; set; }
 
-        public Create2DDomesticBarcodeRequest(IConfiguration configuration)
+        public Create2DDomesticBarcodeRequest(IConfiguration configuration,
+            IDateTimeProviderService dateTimeProviderService)
         {
             this.configuration = configuration;
             this.validator = new Create2DDomesticBarcodeRequestValidator(configuration);
+            this.dateTimeProviderService = dateTimeProviderService;
         }
 
         public void setDefaults()
         {
             if (String.IsNullOrEmpty(ValidFrom))
             {
-                TimeSpan t = DateTime.UtcNow - new DateTime(1970, 1, 1);
+                TimeSpan t = dateTimeProviderService.UtcNow - new DateTime(1970, 1, 1);
                 int secondsSinceEpoch = (int)t.TotalSeconds;
                 ValidFrom = secondsSinceEpoch.ToString();
             }

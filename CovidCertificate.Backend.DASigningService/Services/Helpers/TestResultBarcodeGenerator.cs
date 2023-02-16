@@ -15,6 +15,7 @@ using FluentValidation.Results;
 using CovidCertificate.Backend.DASigningService.Models;
 using CovidCertificate.Backend.Models.DataModels;
 using CovidCertificate.Backend.Interfaces.Certificates.UVCI;
+using CovidCertificate.Backend.Interfaces.DateTimeProvider;
 using CovidCertificate.Backend.Interfaces.International;
 using CovidCertificate.Backend.Interfaces.PKINationaBackend;
 using CovidCertificate.Backend.Models.Interfaces;
@@ -36,7 +37,8 @@ namespace CovidCertificate.Backend.DASigningService.Services.Helpers
             IEncoderService encoder,
             INationalBackendService nationalBackendService,
             ILogger<TestResultBarcodeGenerator> logger,
-            IConfiguration configuration) : base(uvciGenerator, vaccinationMapper, encoder, logger, SingleCharCertificateType.TestResult, new FhirObservationTestResultValidator(configuration), new FhirOrganizationValidator(true))
+            IConfiguration configuration,
+            IDateTimeProviderService dateTimeProviderService) : base(uvciGenerator, vaccinationMapper, encoder, logger, SingleCharCertificateType.TestResult, new FhirObservationTestResultValidator(configuration, dateTimeProviderService), new FhirOrganizationValidator(true))
         {
             this.testResultMapper = testResultMapper;
             this.configuration = configuration;

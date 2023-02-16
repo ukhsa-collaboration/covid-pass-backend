@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using CovidCertificate.Backend.Interfaces;
+using CovidCertificate.Backend.Interfaces.DateTimeProvider;
 using CovidCertificate.Backend.Models.Exceptions;
 using CovidCertificate.Backend.Models.Helpers;
 using CovidCertificate.Backend.Models.ResponseDtos;
@@ -28,13 +29,19 @@ namespace CovidCertificate.Backend.Auth
         private readonly IMongoRepository<OtpRequestDto> mongoRepoOtp;
         private readonly IFeatureManager featureManager;
         private readonly IConfiguration configuration;
+        private readonly IDateTimeProviderService dateTimeProviderService;
 
-        public VerifyOtpService(ILogger<VerifyOtpService> logger, IMongoRepository<OtpRequestDto> mongoRepoOtp, IFeatureManager featureManager, IConfiguration configuration)
+        public VerifyOtpService(ILogger<VerifyOtpService> logger,
+            IMongoRepository<OtpRequestDto> mongoRepoOtp,
+            IFeatureManager featureManager,
+            IConfiguration configuration,
+            IDateTimeProviderService dateTimeProviderService)
         {
             this.logger = logger;
             this.mongoRepoOtp = mongoRepoOtp;
             this.featureManager = featureManager;
             this.configuration = configuration;
+            this.dateTimeProviderService = dateTimeProviderService;
         }
 
         [FunctionName("VerifyOtp")]
@@ -70,9 +77,9 @@ namespace CovidCertificate.Backend.Auth
                 {
                     if (existingOtp.OtpCode == otpCode)
                     {
-                        var createdAt = existingOtp.CreatedAt ?? DateTime.UtcNow;
+                        var createdAt = existingOtp.CreatedAt ?? dateTimeProviderService.UtcNow;
 
-                        var isInvalid = existingOtp.IsStillValid == false || createdAt.AddMinutes(otpTimeToLive) <= DateTime.UtcNow;
+                        var isInvalid = existingOtp.IsStillValid == false || createdAt.AddMinutes(otpTimeToLive) <= dateTimeProviderService.UtcNow;
                         await InvalidateOtp(existingOtp);
 
                         logger.LogInformation($"{nameof(VerifyOtpService)} has finished");

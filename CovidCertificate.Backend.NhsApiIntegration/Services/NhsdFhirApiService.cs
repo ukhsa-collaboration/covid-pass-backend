@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Security;
 using System.Threading.Tasks;
 using System.Web;
 using CovidCertificate.Backend.Models.DataModels;
 using CovidCertificate.Backend.Interfaces.Certificates;
-using CovidCertificate.Backend.Models.Enums;
 using CovidCertificate.Backend.Models.Exceptions;
 using CovidCertificate.Backend.Models.Settings;
 using CovidCertificate.Backend.NhsApiIntegration.Interfaces;
@@ -17,8 +15,6 @@ using Hl7.Fhir.Model;
 using Microsoft.Extensions.Logging;
 using Polly.Wrap;
 using Microsoft.Extensions.Configuration;
-using CovidCertificate.Backend.Interfaces;
-using System.Linq;
 using CovidCertificate.Backend.Models.Helpers;
 using CovidCertificate.Backend.Utils.Extensions;
 using Hl7.Fhir.ElementModel;
@@ -218,9 +214,7 @@ namespace CovidCertificate.Backend.NhsApiIntegration.Services
 
         private async Task<Bundle> GetTestResultsAsync(string[] testSNOMEDCodes, string identityToken, string apiKey)
         {
-            var identityProofingLevel = proofingLevelValidatorService.GetProofingLevel(identityToken);
-
-            VerifyProofingLevel(identityProofingLevel);
+            proofingLevelValidatorService.VerifyProofingLevel(identityToken);
 
             logger.LogInformation("Trying to get access token for Test Results History API.");
 
@@ -255,42 +249,6 @@ namespace CovidCertificate.Backend.NhsApiIntegration.Services
             logger.LogCritical(message);
 
             throw new APILookupException(message);
-        }
-
-        private void VerifyProofingLevel(IdentityProofingLevel identityProofingLevel)
-        {
-            if (settings.DisableP5 && IsP5ProofingLevel(identityProofingLevel))
-            {
-                logger.LogWarning("P5 proofing level detected but is disabled.");
-
-                throw new SecurityException(
-                    "Users with P5 proofing level are not allowed to access Test Results History API.");
-            }
-
-            if (settings.DisableP5Plus && IsP5PlusProofingLevel(identityProofingLevel))
-            {
-                logger.LogWarning("P5Plus proofing level detected but is disabled.");
-
-                throw new SecurityException(
-                    "Users with P5Plus proofing level are not allowed to access Test Results History API.");
-            }
-
-            if (settings.DisableP9 && IsP9ProofingLevel(identityProofingLevel))
-            {
-                logger.LogWarning("P9 proofing level detected but is disabled.");
-
-                throw new SecurityException(
-                    "Users with P9 proofing level are not allowed to access Test Results History API.");
-            }
-
-            if (!settings.AllowAllOtherThanP5AndP5PlusAndP9 && !IsP9OrP5orP5PlusProofingLevel(identityProofingLevel))
-            {
-                logger.LogWarning(
-                    $"Proofing level '{identityProofingLevel}' detected, but profiles other than P5 P5Plus and P9 are not allowed.");
-
-                throw new SecurityException(
-                    $"Users with '{identityProofingLevel}' proofing level are not allowed to access Test Results History API.");
-            }
         }
 
         private HttpRequestMessage CreateRequest(string nhsdUserIdentityToken, string baseUrl, string endpoint, string queryString,
@@ -337,18 +295,6 @@ namespace CovidCertificate.Backend.NhsApiIntegration.Services
                 }
             }
         }
-
-        private bool IsP5ProofingLevel(IdentityProofingLevel identityProofingLevel)
-            => identityProofingLevel == IdentityProofingLevel.P5;
-
-        private bool IsP5PlusProofingLevel(IdentityProofingLevel identityProofingLevel)
-            => identityProofingLevel == IdentityProofingLevel.P5Plus;
-
-        private bool IsP9ProofingLevel(IdentityProofingLevel identityProofingLevel)
-            => identityProofingLevel == IdentityProofingLevel.P9;
-
-        private bool IsP9OrP5orP5PlusProofingLevel(IdentityProofingLevel identityProofingLevel)
-            => IsP5ProofingLevel(identityProofingLevel) || IsP9ProofingLevel(identityProofingLevel) || IsP5PlusProofingLevel(identityProofingLevel);
 
         private NHSDAccessTokenConfigs GetAccessTokenConfig(string apiKey)
         {

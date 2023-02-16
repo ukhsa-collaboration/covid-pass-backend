@@ -26,6 +26,7 @@ using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.FeatureManagement;
 using CovidCertificate.Backend.DASigningService.Models.Exceptions;
+using CovidCertificate.Backend.Interfaces.DateTimeProvider;
 using CovidCertificate.Backend.Models.Helpers;
 using CovidCertificate.Backend.Utils.Constants;
 
@@ -46,6 +47,7 @@ namespace CovidCertificate.Backend.DASigningService
         private readonly IFeatureManager featureManager;
         private readonly IThumbprintValidator thumbprintValidator;
         private readonly ILogger<DevolvedAdministrationBarcodeGeneratorFunction> logger;
+        private readonly IDateTimeProviderService dateTimeProviderService;
 
         public DevolvedAdministrationBarcodeGeneratorFunction(
             IBarcodeGenerator barcodeGenerator,
@@ -55,7 +57,8 @@ namespace CovidCertificate.Backend.DASigningService
             IConfigurationRefresher configurationRefresher,
             IFeatureManager featureManager,
             IThumbprintValidator thumbprintValidator,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            IDateTimeProviderService dateTimeProviderService)
         {
             this.barcodeGenerator = barcodeGenerator;
             this.regionConfigService = regionConfigService;
@@ -65,6 +68,7 @@ namespace CovidCertificate.Backend.DASigningService
             this.featureManager = featureManager;
             this.thumbprintValidator = thumbprintValidator;
             this.logger = logger;
+            this.dateTimeProviderService = dateTimeProviderService;
         }
 
         [FunctionName(RecoveryApiName)]
@@ -177,7 +181,7 @@ namespace CovidCertificate.Backend.DASigningService
             ICreate2DBarcodeRequest request;
             if (type == CertificateType.DomesticMandatory)
             {
-                var domesticRequest = new Create2DDomesticBarcodeRequest(configuration);
+                var domesticRequest = new Create2DDomesticBarcodeRequest(configuration, dateTimeProviderService);
 
                 domesticRequest.RegionSubscriptionNameHeader = req.Headers[HeaderConsts.RegionSubscriptionNameHeader];
                 domesticRequest.Body = rawRequestBody;
@@ -189,7 +193,7 @@ namespace CovidCertificate.Backend.DASigningService
                 request = domesticRequest;
             } else
             {
-                var internationalRequest = new Create2DBarcodeRequest(configuration);
+                var internationalRequest = new Create2DBarcodeRequest(configuration, dateTimeProviderService);
 
                 internationalRequest.Type = type;
                 internationalRequest.RegionSubscriptionNameHeader = req.Headers[HeaderConsts.RegionSubscriptionNameHeader];

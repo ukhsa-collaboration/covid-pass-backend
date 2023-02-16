@@ -8,6 +8,7 @@ using CovidCertificate.Backend.DASigningService.Services.Model;
 using CovidCertificate.Backend.DASigningService.Validators;
 using CovidCertificate.Backend.Interfaces;
 using CovidCertificate.Backend.Interfaces.Certificates.UVCI;
+using CovidCertificate.Backend.Interfaces.DateTimeProvider;
 using CovidCertificate.Backend.Interfaces.International;
 using CovidCertificate.Backend.Models.DataModels;
 using CovidCertificate.Backend.Models.Interfaces;
@@ -32,7 +33,8 @@ namespace CovidCertificate.Backend.DASigningService.Services.Helpers
             IEncoderService encoder,
             ILogger<RecoveryBarcodeGenerator> logger,
             IBlobFilesInMemoryCache<TestMappings> mappingCache,
-            IConfiguration configuration) : base(uvciGeneratorService, vaccinationMapper, encoder, logger, SingleCharCertificateType.Recovery, new FhirObservationRecoveryValidator(configuration, mappingCache), new FhirOrganizationValidator())
+            IConfiguration configuration,
+            IDateTimeProviderService dateTimeProviderService) : base(uvciGeneratorService, vaccinationMapper, encoder, logger, SingleCharCertificateType.Recovery, new FhirObservationRecoveryValidator(configuration, mappingCache, dateTimeProviderService), new FhirOrganizationValidator())
         {
             this.testResultMapper = testResultMapper;
             this.configuration = configuration;

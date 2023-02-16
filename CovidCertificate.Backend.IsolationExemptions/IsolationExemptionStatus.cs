@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using CovidCertificate.Backend.Interfaces;
+using CovidCertificate.Backend.Interfaces.DateTimeProvider;
 using CovidCertificate.Backend.Interfaces.EndpointValidation;
 using CovidCertificate.Backend.Models.DataModels;
 using CovidCertificate.Backend.Models.Exceptions;
@@ -30,13 +31,17 @@ namespace CovidCertificate.Backend.IsolationExemptions
         IIsolationExemptionStatusService isolationExemptionStatusService;
         private readonly IPostEndpointValidationService postEndpointValidationService;
         private readonly ILogger<IsolationExemptionStatus> logger;
+        private readonly IDateTimeProviderService dateTimeProviderService;
 
         public IsolationExemptionStatus(ILogger<IsolationExemptionStatus> logger,
-            IIsolationExemptionStatusService isolationExemptionStatusService, IPostEndpointValidationService postEndpointValidationService)
+            IIsolationExemptionStatusService isolationExemptionStatusService,
+            IPostEndpointValidationService postEndpointValidationService,
+            IDateTimeProviderService dateTimeProviderService)
         {
             this.isolationExemptionStatusService = isolationExemptionStatusService;
             this.logger = logger;
             this.postEndpointValidationService = postEndpointValidationService;
+            this.dateTimeProviderService = dateTimeProviderService;
         }
 
         [FunctionName("IsolationExemptionStatus")]
@@ -139,7 +144,7 @@ namespace CovidCertificate.Backend.IsolationExemptions
             }
             else
             {
-                effectiveDatetime = DateTime.UtcNow;
+                effectiveDatetime = dateTimeProviderService.UtcNow;
                 logger.LogInformation("Effective date not provided. Using DateTime.Now instead.");
             }
             return effectiveDatetime;

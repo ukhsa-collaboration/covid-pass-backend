@@ -25,10 +25,6 @@ To clone the repository:
 1. Open a new CMD instance (if installed use git bash) and navigate to the destination directory where you'd like the cloned repository to exist. If necessary, create this folder first.
 2. Execute the command: git clone https://github.com/nhsx/covid-pass-backend.git
 
-## For More Information
-
-If you have further questions about the NHS COVID Pass service please email covidcertstatuspmo@nhsbsa.nhs.uk
-
 **Link to the licence file**
 
 https://github.com/nhsx/covid-pass-backend/blob/main/LICENSE

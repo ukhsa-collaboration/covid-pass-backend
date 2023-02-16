@@ -4,31 +4,36 @@ using CovidCertificate.Backend.Models.Enums;
 using FluentValidation.Results;
 using Microsoft.Extensions.Configuration;
 using System;
+using CovidCertificate.Backend.Interfaces.DateTimeProvider;
 
 namespace CovidCertificate.Backend.DASigningService.Requests
 {
     public class Create2DBarcodeRequest : ICreate2DBarcodeRequest
     {
+        private readonly IDateTimeProviderService dateTimeProviderService;
+
         private IConfiguration configuration;
         private Create2DBarcodeRequestValidator validator;
-                
+
         public CertificateType Type { get; set; }
         public string RegionSubscriptionNameHeader { get; set; }
         public string Body { get; set; }
         public string ValidFrom { get; set; }
         public string ValidTo { get; set; }
 
-        public Create2DBarcodeRequest(IConfiguration configuration)
+        public Create2DBarcodeRequest(IConfiguration configuration,
+            IDateTimeProviderService dateTimeProviderService)
         {
             this.configuration = configuration;
             this.validator = new Create2DBarcodeRequestValidator(configuration);
+            this.dateTimeProviderService = dateTimeProviderService;
         }
 
         public void SetDefaults()
         {            
             if (String.IsNullOrEmpty(ValidFrom))
             {
-                TimeSpan t = DateTime.UtcNow - new DateTime(1970, 1, 1);
+                TimeSpan t = dateTimeProviderService.UtcNow - new DateTime(1970, 1, 1);
                 int secondsSinceEpoch = (int)t.TotalSeconds;
                 ValidFrom = secondsSinceEpoch.ToString();
             }

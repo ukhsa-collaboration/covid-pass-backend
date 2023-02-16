@@ -9,20 +9,26 @@ using CovidCertificate.Backend.Interfaces;
 using System.Threading.Tasks;
 using CovidCertificate.Backend.Models.DataModels;
 using CovidCertificate.Backend.Utils.Extensions;
+using CovidCertificate.Backend.Interfaces.DateTimeProvider;
 
 namespace CovidCertificate.Backend.DASigningService.Validators
 {
     public class FhirObservationRecoveryValidator : AbstractValidator<Observation>
     {
-        private IConfiguration configuration;
-        private IBlobFilesInMemoryCache<TestMappings> mappingCache;
+        private readonly IDateTimeProviderService dateTimeProviderService;
         private readonly string blobContainer;
         private readonly string blobFilename;
 
-        public FhirObservationRecoveryValidator(IConfiguration configuration, IBlobFilesInMemoryCache<TestMappings> mappingCache)
+        private IConfiguration configuration;
+        private IBlobFilesInMemoryCache<TestMappings> mappingCache;
+
+        public FhirObservationRecoveryValidator(IConfiguration configuration,
+            IBlobFilesInMemoryCache<TestMappings> mappingCache,
+            IDateTimeProviderService dateTimeProviderService)
         {
             this.configuration = configuration;
             this.mappingCache = mappingCache;
+            this.dateTimeProviderService = dateTimeProviderService;
             blobContainer = configuration["BlobContainerNameTestMappings"];
             blobFilename = configuration["BlobFileNameTestMappings"];
 
@@ -117,14 +123,14 @@ namespace CovidCertificate.Backend.DASigningService.Validators
             FhirDateTime effectiveFhirDate = (FhirDateTime)datatype;
             DateTime effectiveDate = effectiveFhirDate.ToDateTimeOffset(TimeSpan.Zero).DateTime;
 
-            if (effectiveDate.AddHours(validAfter) > DateTime.UtcNow)
+            if (effectiveDate.AddHours(validAfter) > dateTimeProviderService.UtcNow)
             {
                 //EffectiveDate + minimum time which must elapse before a positive corona-test may result in a 2D barcode is after today
                 //meaning that the positive test is too recent to be considered valid
                 return false;
             }
 
-            if (effectiveDate.AddHours(validUntil) < DateTime.UtcNow)
+            if (effectiveDate.AddHours(validUntil) < dateTimeProviderService.UtcNow)
             {
                 //EffectiveDate + maximum time after positive corona-test before we no longer consider the person to be immune is before today
                 //meaning that the positive test is too old to be considered valid

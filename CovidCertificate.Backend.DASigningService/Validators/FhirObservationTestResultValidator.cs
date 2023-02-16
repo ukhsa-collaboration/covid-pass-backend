@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using CovidCertificate.Backend.DASigningService.ErrorHandling;
+using CovidCertificate.Backend.Interfaces.DateTimeProvider;
 using CovidCertificate.Backend.Utils.Extensions;
 using FluentValidation;
 using FluentValidation.Results;
@@ -11,11 +12,15 @@ namespace CovidCertificate.Backend.DASigningService.Validators
 {
     public class FhirObservationTestResultValidator : AbstractValidator<Observation>
     {
+        private readonly IDateTimeProviderService dateTimeProviderService;
+
         private IConfiguration configuration;
 
-        public FhirObservationTestResultValidator(IConfiguration configuration)
+        public FhirObservationTestResultValidator(IConfiguration configuration,
+            IDateTimeProviderService dateTimeProviderService)
         {
             this.configuration = configuration;
+            this.dateTimeProviderService = dateTimeProviderService;
 
             RuleFor(x => x.Value).Cascade(CascadeMode.Stop).NotNull()
                 .WithMessage("Observation.ValueCodableConcept.Coding[0] missing.")
@@ -124,7 +129,7 @@ namespace CovidCertificate.Backend.DASigningService.Validators
             DateTime effectiveDate = effectiveFhirDate.ToDateTimeOffset(TimeSpan.Zero).DateTime;
 
 
-            if (effectiveDate.AddHours(validUntil) < DateTime.UtcNow)
+            if (effectiveDate.AddHours(validUntil) < dateTimeProviderService.UtcNow)
             {
                 //EffectiveDate + maximum time after negative corona-test before we no longer consider the person safe is before today
                 //meaning that the negative test is too old to be considered valid

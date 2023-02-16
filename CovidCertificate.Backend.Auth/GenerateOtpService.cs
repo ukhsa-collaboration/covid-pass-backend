@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using CovidCertificate.Backend.Interfaces;
+using CovidCertificate.Backend.Interfaces.DateTimeProvider;
 using CovidCertificate.Backend.Interfaces.TwoFactor;
 using CovidCertificate.Backend.Models.Exceptions;
 using CovidCertificate.Backend.Models.Helpers;
@@ -29,15 +30,21 @@ namespace CovidCertificate.Backend.Auth
         private readonly IConfiguration configuration;
         private readonly IFeatureManager featureManager;
         private readonly ISmsService smsService;
+        private readonly IDateTimeProviderService dateTimeProviderService;
 
-        public GenerateOtpService(ILogger<GenerateOtpService> logger, IMongoRepository<OtpRequestDto> mongoRepoOtp, IConfiguration configuration, IFeatureManager featureManager,
-            ISmsService smsService)
+        public GenerateOtpService(ILogger<GenerateOtpService> logger,
+            IMongoRepository<OtpRequestDto> mongoRepoOtp,
+            IConfiguration configuration,
+            IFeatureManager featureManager,
+            ISmsService smsService,
+            IDateTimeProviderService dateTimeProviderService)
         {
             this.logger = logger;
             this.mongoRepoOtp = mongoRepoOtp;
             this.configuration = configuration;
             this.featureManager = featureManager;
             this.smsService = smsService;
+            this.dateTimeProviderService = dateTimeProviderService;
         }
 
         [FunctionName("GenerateOtp")]
@@ -84,7 +91,7 @@ namespace CovidCertificate.Backend.Auth
                 var isFinalGenerated = existingOtps.Count() >= maxOtpGenerations - 1;
            
                 var otpDto = new OtpRequestDto(hashedPhoneNumber, otpCode,
-                    maxOtpAttempts, isFinalGenerated, isStillValid: true, createdAt: DateTime.UtcNow);
+                    maxOtpAttempts, isFinalGenerated, isStillValid: true, createdAt: dateTimeProviderService.UtcNow);
 
                 await mongoRepoOtp.InsertOneAsync(otpDto);
 

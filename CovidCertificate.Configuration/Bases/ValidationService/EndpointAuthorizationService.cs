@@ -16,6 +16,7 @@ using CovidCertificate.Backend.Models;
 using CovidCertificate.Backend.Models.Enums;
 using CovidCertificate.Backend.Models.Settings;
 using System.Linq;
+using CovidCertificate.Backend.Interfaces.DateTimeProvider;
 using CovidCertificate.Backend.Interfaces.EndpointValidation;
 using CovidCertificate.Backend.Interfaces.JwtServices;
 using Microsoft.Extensions.Configuration.AzureAppConfiguration;
@@ -44,16 +45,24 @@ namespace CovidCertificate.Backend.Configuration.Bases.ValidationService
         private readonly ILogger<EndpointAuthorizationService> logger;
         private readonly IFeatureManager featureManager;
         private readonly IGracePeriodService gracePeriodService;
+        private readonly IDateTimeProviderService dateTimeProviderService;
 
-        public EndpointAuthorizationService(IConfiguration configuration, ILogger<EndpointAuthorizationService> logger,
-            IMongoRepository<OdsCodeCountryModel> mongoRepository, IRedisCacheService redisCacheService, IConfigurationRefresher configurationRefresher,
-            IFeatureManager featureManager, IJwtValidator jwtValidator, IGracePeriodService gracePeriodService)
+        public EndpointAuthorizationService(IConfiguration configuration,
+            ILogger<EndpointAuthorizationService> logger,
+            IMongoRepository<OdsCodeCountryModel> mongoRepository,
+            IRedisCacheService redisCacheService,
+            IConfigurationRefresher configurationRefresher,
+            IFeatureManager featureManager,
+            IJwtValidator jwtValidator,
+            IGracePeriodService gracePeriodService,
+            IDateTimeProviderService dateTimeProviderService)
         {
             this.logger = logger;
             this.mongoRepository = mongoRepository;
             this.redisCacheService = redisCacheService;
             this.configurationRefresher = configurationRefresher;
             this.featureManager = featureManager;
+            this.dateTimeProviderService = dateTimeProviderService;
 
             _minimumSecondsBeforeExpiry = int.TryParse(configuration["MinimumSecondsBeforeTokenExpiry"], out _minimumSecondsBeforeExpiry)
                 ? this._minimumSecondsBeforeExpiry : 0;
@@ -462,7 +471,7 @@ namespace CovidCertificate.Backend.Configuration.Bases.ValidationService
         }
         private bool IsTokenCloseToExpire(JwtSecurityToken token)
         {
-            return token.ValidTo.AddSeconds(-_minimumSecondsBeforeExpiry) < DateTime.UtcNow;
+            return token.ValidTo.AddSeconds(-_minimumSecondsBeforeExpiry) < dateTimeProviderService.UtcNow;
         }
 
         private bool CheckAudiencesMatch(JwtSecurityToken token)

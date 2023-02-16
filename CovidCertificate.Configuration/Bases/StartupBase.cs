@@ -23,7 +23,9 @@ using CovidCertificate.Backend.PKINationalBackend.Models;
 using CovidCertificate.Backend.Interfaces.PKINationaBackend;
 using CovidCertificate.Backend.Services.PKINationaBackend;
 using System.Runtime.InteropServices;
+using CovidCertificate.Backend.Interfaces.DateTimeProvider;
 using CovidCertificate.Backend.PKINationalBackend.Services;
+using CovidCertificate.Backend.Services.DateTimeProvider;
 using CovidCertificate.Backend.Services.Mocks;
 
 namespace CovidCertificate.Backend.Configuration.Bases
@@ -79,6 +81,7 @@ namespace CovidCertificate.Backend.Configuration.Bases
             builder.Services.AddSingleton<IRedisCacheService, RedisCacheService>();
             builder.Services.AddSingleton<IMemoryCacheService, MemoryCacheService>();
             builder.Services.AddSingleton<IValueSetService, ValueSetService>();
+            builder.Services.AddSingleton<IDateTimeProviderService, DateTimeProviderService>();
 
             //Can't do mutual TLS on Windows so need to mock it
             var env = Environment.GetEnvironmentVariable("ENVIRONMENT").ToLower();

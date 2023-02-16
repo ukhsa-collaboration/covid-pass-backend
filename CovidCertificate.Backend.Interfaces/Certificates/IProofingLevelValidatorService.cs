@@ -6,5 +6,6 @@ namespace CovidCertificate.Backend.Interfaces.Certificates
     {
         bool ValidateProofingLevel(string idToken);
         IdentityProofingLevel GetProofingLevel(string idToken);
+        void VerifyProofingLevel(string identityToken);
     }
 }
