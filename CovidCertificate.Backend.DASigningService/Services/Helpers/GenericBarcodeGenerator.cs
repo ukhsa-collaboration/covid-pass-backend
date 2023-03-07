@@ -91,6 +91,8 @@ namespace CovidCertificate.Backend.DASigningService.Services.Helpers
                 UVCI = uvci
             };
 
+            logger.LogDebug("Generation of UVCI Complete.");
+
             return result;
         }
 
@@ -104,7 +106,7 @@ namespace CovidCertificate.Backend.DASigningService.Services.Helpers
             {
                 var validationResult = await validator.ValidateAsync(CreateNewRecord());
 
-                logger.LogWarning($"No records of type {typeof(T)} found");
+                logger.LogWarning($"No records of type {typeof(T)} found.");
 
                 return BarcodeGeneratorUtils.GenerateBarcodeResultsForNullImmunizationOrObservation(validationResult, certificateType.SingleCharValue);
             }

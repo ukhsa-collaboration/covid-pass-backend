@@ -79,6 +79,8 @@ namespace CovidCertificate.Backend.DASigningService.Services
                 }
             };
 
+            logger.LogDebug("Generation of UVCI Complete.");
+
             return barcodeResults;
         }
 
@@ -133,6 +135,8 @@ namespace CovidCertificate.Backend.DASigningService.Services
                     }
                 };
             }
+
+            logger.LogDebug("Patient Validated.");
 
             return null;
         }

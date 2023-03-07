@@ -1,9 +1,9 @@
-﻿using CovidCertificate.Backend.DASigningService.Interfaces;
-using CovidCertificate.Backend.DASigningService.Models;
-using Microsoft.Extensions.Configuration;
-using System;
+﻿using System;
 using System.Linq;
 using CovidCertificate.Backend.DASigningService.ErrorHandling;
+using CovidCertificate.Backend.DASigningService.Interfaces;
+using CovidCertificate.Backend.DASigningService.Models;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace CovidCertificate.Backend.DASigningService.Services
@@ -37,11 +37,13 @@ namespace CovidCertificate.Backend.DASigningService.Services
                     return null;
                 }
 
+                logger.LogDebug("regionConfig found.");
+
                 return regionConfig;
             }
             catch (Exception e)
             {
-                logger.LogCritical(e,$"Error occured when obtaining regionCode from header. ex. message: '{e.Message}'.");
+                logger.LogCritical(e, $"Error occured when obtaining regionCode from header. ex. message: '{e.Message}'.");
 
                 errorHandler.AddError(ErrorCode.UNEXPECTED_SYSTEM_ERROR, "Unexpected error retrieving calling region");
 
@@ -51,9 +53,9 @@ namespace CovidCertificate.Backend.DASigningService.Services
 
         private string GetRegionCode(string subscriptionName)
         {
-            var splitted = subscriptionName.Split("-");
+            var regionalCode = subscriptionName.Split("-")[1];
 
-            return splitted[1];
+            return regionalCode;
         }
     }
 }

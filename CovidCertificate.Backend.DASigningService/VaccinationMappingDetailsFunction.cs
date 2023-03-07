@@ -59,6 +59,7 @@ namespace CovidCertificate.Backend.DASigningService
 
                 if (errorHandler.HasErrors())
                 {
+                    logger.LogDebug("Thumbprint Validated.");
                     return new BadRequestObjectResult(new { errorHandler.Errors });
                 }
 

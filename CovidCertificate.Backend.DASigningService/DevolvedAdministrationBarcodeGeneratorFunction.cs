@@ -1,34 +1,34 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
+using CovidCertificate.Backend.DASigningService.ErrorHandling;
+using CovidCertificate.Backend.DASigningService.Interfaces;
+using CovidCertificate.Backend.DASigningService.Models;
+using CovidCertificate.Backend.DASigningService.Models.Exceptions;
+using CovidCertificate.Backend.DASigningService.Requests;
+using CovidCertificate.Backend.DASigningService.Requests.Interfaces;
+using CovidCertificate.Backend.DASigningService.Services.Commands;
+using CovidCertificate.Backend.Interfaces.DateTimeProvider;
+using CovidCertificate.Backend.Models.Deserializers;
+using CovidCertificate.Backend.Models.Enums;
+using CovidCertificate.Backend.Models.Helpers;
+using CovidCertificate.Backend.Utils;
+using CovidCertificate.Backend.Utils.Constants;
+using Hl7.Fhir.Model;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.Extensions.Logging;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using System;
-using System.Net;
-using CovidCertificate.Backend.DASigningService.ErrorHandling;
-using CovidCertificate.Backend.DASigningService.Interfaces;
-using CovidCertificate.Backend.DASigningService.Requests;
-using CovidCertificate.Backend.DASigningService.Models;
-using CovidCertificate.Backend.DASigningService.Requests.Interfaces;
-using CovidCertificate.Backend.DASigningService.Services.Commands;
-using Hl7.Fhir.Model;
-using CovidCertificate.Backend.Models.Deserializers;
-using BarcodeResults = CovidCertificate.Backend.DASigningService.Responses.BarcodeResults;
-using CovidCertificate.Backend.Models.Enums;
-using CovidCertificate.Backend.Utils;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
-using Microsoft.Extensions.Configuration.AzureAppConfiguration;
-using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.AzureAppConfiguration;
+using Microsoft.Extensions.Logging;
 using Microsoft.FeatureManagement;
-using CovidCertificate.Backend.DASigningService.Models.Exceptions;
-using CovidCertificate.Backend.Interfaces.DateTimeProvider;
-using CovidCertificate.Backend.Models.Helpers;
-using CovidCertificate.Backend.Utils.Constants;
+using Microsoft.OpenApi.Models;
+using BarcodeResults = CovidCertificate.Backend.DASigningService.Responses.BarcodeResults;
 
 namespace CovidCertificate.Backend.DASigningService
 {
@@ -102,7 +102,7 @@ namespace CovidCertificate.Backend.DASigningService
             return await Create2DBarcodeAsync(req, CertificateType.DomesticMandatory, DomesticApiName);
         }
 
-        
+
         [FunctionName(TestResultsApiName)]
         public async Task<IActionResult> Create2DTestResultsBarcode([HttpTrigger(AuthorizationLevel.Function, "post", Route = "testresults/2dbarcode")] HttpRequest req)
         {
@@ -134,28 +134,33 @@ namespace CovidCertificate.Backend.DASigningService
 
                 if (errorHandler.HasErrors())
                 {
-                    return new BadRequestObjectResult(new BarcodeResults {Errors = errorHandler.Errors});
+                    logger.LogError("Errors found after Validating Thumbprint.");
+
+                    return new BadRequestObjectResult(new BarcodeResults { Errors = errorHandler.Errors });
                 }
 
                 (bool isValid, BadRequestObjectResult badRequestResult) = ValidateRequest(request);
 
                 if (!isValid)
                 {
+                    logger.LogWarning("Request found not valid.");
+
                     return await GetBadRequestResultAsync(regionConfig, apiName, badRequestResult);
                 }
 
                 BarcodeResults barcodeResult = await GetBarcodeResultsAsync(type, regionConfig, rawRequestBody, request);
 
-                logger.LogDebug(apiName + " finished");
+                logger.LogDebug(apiName + " finished.");
                 return await GetOKResultAsync(regionConfig, apiName, barcodeResult);
             }
             catch (FormatException ex)
             {
-                logger.LogError(ex, "Cannot parse FHIR payload.");
+                logger.LogError($"Cannot parse FHIR payload. Error message: {ex.Message}.");
 
                 var result = new BadRequestObjectResult(new Error
                 {
-                    Code = ((ushort)ErrorCode.FHIR_INVALID).ToString(), Message = ex.Message,
+                    Code = ((ushort)ErrorCode.FHIR_INVALID).ToString(),
+                    Message = ex.Message,
                 });
 
                 return await GetBadRequestResultAsync(regionConfig, apiName, result);
@@ -169,7 +174,6 @@ namespace CovidCertificate.Backend.DASigningService
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, ex.Message);
                 errorHandler.AddError(ErrorCode.UNEXPECTED_SYSTEM_ERROR);
 
                 return await GetErrorResultAsync(regionConfig, apiName, errorHandler);
@@ -178,32 +182,31 @@ namespace CovidCertificate.Backend.DASigningService
 
         private ICreate2DBarcodeRequest CreateRequest(CertificateType type, HttpRequest req, string rawRequestBody)
         {
-            ICreate2DBarcodeRequest request;
             if (type == CertificateType.DomesticMandatory)
             {
-                var domesticRequest = new Create2DDomesticBarcodeRequest(configuration, dateTimeProviderService);
+                var domesticRequest = new Create2DDomesticBarcodeRequest(configuration, dateTimeProviderService)
+                {
+                    RegionSubscriptionNameHeader = req.Headers[HeaderConsts.RegionSubscriptionNameHeader],
+                    Body = rawRequestBody,
+                    Policy = req.Query["policy"],
+                    PolicyMask = req.Query["policyMask"],
+                    ValidFrom = req.Query["validFrom"],
+                    ValidTo = req.Query["validTo"]
+                };
 
-                domesticRequest.RegionSubscriptionNameHeader = req.Headers[HeaderConsts.RegionSubscriptionNameHeader];
-                domesticRequest.Body = rawRequestBody;
-                domesticRequest.Policy = req.Query["policy"];
-                domesticRequest.PolicyMask = req.Query["policyMask"];
-                domesticRequest.ValidFrom = req.Query["validFrom"];
-                domesticRequest.ValidTo = req.Query["validTo"];
-
-                request = domesticRequest;
-            } else
-            {
-                var internationalRequest = new Create2DBarcodeRequest(configuration, dateTimeProviderService);
-
-                internationalRequest.Type = type;
-                internationalRequest.RegionSubscriptionNameHeader = req.Headers[HeaderConsts.RegionSubscriptionNameHeader];
-                internationalRequest.Body = rawRequestBody;
-                internationalRequest.ValidFrom = req.Query["validFrom"];
-                internationalRequest.ValidTo = req.Query["validTo"];
-
-                request = internationalRequest;
+                return domesticRequest;
             }
-            return request;
+
+            var internationalRequest = new Create2DBarcodeRequest(configuration, dateTimeProviderService)
+            {
+                Type = type,
+                RegionSubscriptionNameHeader = req.Headers[HeaderConsts.RegionSubscriptionNameHeader],
+                Body = rawRequestBody,
+                ValidFrom = req.Query["validFrom"],
+                ValidTo = req.Query["validTo"]
+            };
+
+            return internationalRequest;
         }
 
         private async Task<BarcodeResults> GetBarcodeResultsAsync(CertificateType type, RegionConfig regionConfig, string rawRequestBody, ICreate2DBarcodeRequest request)
@@ -216,7 +219,7 @@ namespace CovidCertificate.Backend.DASigningService
                 var patient = FHIRDeserializer.Deserialize<Patient>(rawRequestBody);
                 var domesticRequest = (Create2DDomesticBarcodeRequest)request;
 
-                var command = new GenerateDomesticBarcodeCommand
+                var domesticBarcodeCommand = new GenerateDomesticBarcodeCommand
                 {
                     Patient = patient,
                     Policies = domesticRequest.Policy.Split(","),
@@ -226,23 +229,21 @@ namespace CovidCertificate.Backend.DASigningService
                     RegionConfig = regionConfig
                 };
 
-                return await barcodeGenerator.GenerateDomesticBarcodeAsync(command);
+                return await barcodeGenerator.GenerateDomesticBarcodeAsync(domesticBarcodeCommand);
             }
-            else
+
+            var bundle = FHIRDeserializer.Deserialize<Bundle>(rawRequestBody);
+
+            var generateInternationalBarcodeCommand = new GenerateInternationalBarcodeCommand
             {
-                var bundle = FHIRDeserializer.Deserialize<Bundle>(rawRequestBody);
+                Bundle = bundle,
+                RegionConfig = regionConfig,
+                CertificateType = type,
+                ValidFrom = validFrom,
+                ValidTo = validTo
+            };
 
-                var command = new GenerateInternationalBarcodeCommand
-                {
-                    Bundle = bundle,
-                    RegionConfig = regionConfig,
-                    CertificateType = type,
-                    ValidFrom = validFrom,
-                    ValidTo = validTo
-                };
-
-                return await barcodeGenerator.GenerateInternationalBarcodesAsync(command);
-            }
+            return await barcodeGenerator.GenerateInternationalBarcodesAsync(generateInternationalBarcodeCommand);
         }
 
         private async Task<IActionResult> GetOKResultAsync(RegionConfig regionConfig, string apiName, BarcodeResults barcodeResult)

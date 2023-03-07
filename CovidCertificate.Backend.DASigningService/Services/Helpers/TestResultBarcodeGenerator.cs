@@ -51,15 +51,18 @@ namespace CovidCertificate.Backend.DASigningService.Services.Helpers
             var newestObservation = observations.Where(x => x.Effective != null).OrderByDescending(x => x.Effective).FirstOrDefault();
 
             var validityEndDate = command.ValidTo;
-            if (newestObservation != null)
+
+            if (newestObservation == null)
             {
-                var validityAfterEffective = configuration.GetValue<int>("HoursAfterTestResultBeforeCertificateInvalid");
-                
-                validityEndDate = DateUtils.MinimumOfTwoDates(
-                    validityEndDate,
-                    ((FhirDateTime)newestObservation.Effective).ToDateTimeOffset(TimeSpan.Zero).DateTime.AddHours(validityAfterEffective)
-                    );
+                return validityEndDate;
             }
+
+            var validityAfterEffective = configuration.GetValue<int>("HoursAfterTestResultBeforeCertificateInvalid");
+                
+            validityEndDate = DateUtils.MinimumOfTwoDates(
+                validityEndDate,
+                ((FhirDateTime)newestObservation.Effective).ToDateTimeOffset(TimeSpan.Zero).DateTime.AddHours(validityAfterEffective)
+            );
             return validityEndDate;
         }
 
