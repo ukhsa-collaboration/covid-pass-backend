@@ -57,18 +57,18 @@ namespace CovidCertificate.Backend.DASigningService.Validators
                 .WithMessage("Immunization.ProtocolApplied missing or empty.")
                 .WithErrorCode(
                     ErrorCode.FHIR_IMMUNIZATION_PROTOCOLAPPLIED_DOSENUMBER_MISSING.ToString(StringUtils.NumberFormattedEnumFormat));
-
+RuleFor(x => x.ProtocolApplied.FirstOrDefault().DoseNumber).Cascade(CascadeMode.Stop).NotEmpty()
+                .When(x => x.ProtocolApplied?.FirstOrDefault() != null)
+                .WithMessage("Immunization.ProtocolApplied[0].DoseNumber missing or empty.")
+                .WithErrorCode(
+                    ErrorCode.FHIR_IMMUNIZATION_PROTOCOLAPPLIED_DOSENUMBER_MISSING.ToString(StringUtils.NumberFormattedEnumFormat));
             RuleFor(x => x.ProtocolApplied.FirstOrDefault()).Cascade(CascadeMode.Stop).NotEmpty()
                 .When(x => x.ProtocolApplied != null)
                 .WithMessage("Immunization.ProtocolApplied[0] missing or empty.")
                 .WithErrorCode(
                     ErrorCode.FHIR_IMMUNIZATION_PROTOCOLAPPLIED_DOSENUMBER_MISSING.ToString(StringUtils.NumberFormattedEnumFormat));
 
-            RuleFor(x => x.ProtocolApplied.FirstOrDefault().DoseNumber).Cascade(CascadeMode.Stop).NotEmpty()
-                .When(x => x.ProtocolApplied?.FirstOrDefault() != null)
-                .WithMessage("Immunization.ProtocolApplied[0].DoseNumber missing or empty.")
-                .WithErrorCode(
-                    ErrorCode.FHIR_IMMUNIZATION_PROTOCOLAPPLIED_DOSENUMBER_MISSING.ToString(StringUtils.NumberFormattedEnumFormat));
+            
             
             RuleFor(x => ((PositiveInt) x.ProtocolApplied.FirstOrDefault().DoseNumber).Value).Cascade(CascadeMode.Stop).LessThanOrEqualTo( x => ((PositiveInt) x.ProtocolApplied.FirstOrDefault().SeriesDoses).Value)
                 .When(x => x.ProtocolApplied?.FirstOrDefault()?.SeriesDoses != null)

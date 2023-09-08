@@ -18,7 +18,6 @@ using CovidCertificate.Backend.Interfaces.International;
 using CovidCertificate.Backend.Interfaces.PKINationaBackend;
 using CovidCertificate.Backend.Models.DataModels;
 using CovidCertificate.Backend.Models.Interfaces;
-using CovidCertificate.Backend.PKINationalBackend.Services;
 using CovidCertificate.Backend.Services.Certificates.UVCI;
 using CovidCertificate.Backend.Services.International;
 using CovidCertificate.Backend.Services.PKINationaBackend;

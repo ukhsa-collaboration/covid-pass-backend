@@ -32,11 +32,13 @@ using CovidCertificate.Backend.Services.GracePeriodServices;
 using CovidCertificate.Backend.Services.International;
 using CovidCertificate.Backend.Services.Notifications;
 using Microsoft.ApplicationInsights;
+using System.Diagnostics.CodeAnalysis;
 
 [assembly: FunctionsStartup(typeof(Startup))]
 
 namespace CovidCertificate.Backend
 {
+    [ExcludeFromCodeCoverage]
     public class Startup : StartupBase
     {
         public override void SetupFunctionSpecificSettings(IFunctionsHostBuilder builder)
@@ -87,6 +89,8 @@ namespace CovidCertificate.Backend
 
             builder.Services.AddDomesticExemptionServices();
             builder.Services.AddQRCodeSigningServices();
+            builder.Services.AddEndpointValidationServices();
+
             builder.Services.AddSingleton<IPublicKeyService, PublicKeyService>();
             builder.Services.AddSingleton<INhsTestResultsHistoryApiAccessTokenService, NhsTestResultsHistoryApiAccessTokenService>();
             builder.Services.AddSingleton<INhsdFhirApiService, NhsdFhirApiService>();
@@ -98,10 +102,9 @@ namespace CovidCertificate.Backend
             builder.Services.AddSingleton<IUserConfigurationService, UserConfigurationService>();
             builder.Services.AddSingleton<IUserPreferenceService, UserPreferenceService>();
             builder.Services.AddSingleton<IUserPolicyService, UserPolicyService>();
-            builder.Services.AddSingleton<IGracePeriodService, GracePeriodService>();
             builder.Services.AddSingleton<IGracePeriodCache, GracePeriodCache>();
+            builder.Services.AddSingleton<IGracePeriodService, GracePeriodService>();
             builder.Services.AddSingleton<IDomesticPdfLimiter, DomesticPdfLimiter>();
-            builder.Services.AddSingleton<IEndpointAuthorizationService, EndpointAuthorizationService>();
             builder.Services.AddSingleton<IPostEndpointValidationService, PostEndpointValidationService>();
             builder.Services.AddSingleton<IBoosterValidityService, BoosterValidityService>();
             builder.Services.AddSingleton<IVaccineService, VaccineService>();

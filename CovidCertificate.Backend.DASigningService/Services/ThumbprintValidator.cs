@@ -1,4 +1,6 @@
-﻿using CovidCertificate.Backend.DASigningService.ErrorHandling;
+﻿using System;
+using System.Linq;
+using CovidCertificate.Backend.DASigningService.ErrorHandling;
 using CovidCertificate.Backend.DASigningService.Interfaces;
 using CovidCertificate.Backend.DASigningService.Models.Exceptions;
 using CovidCertificate.Backend.Utils.Constants;
@@ -27,7 +29,7 @@ namespace CovidCertificate.Backend.DASigningService.Services
                     request.Headers[HeaderConsts.RegionSubscriptionNameHeader],
                     errorHandler);
 
-            var clientThumbprint = request.Headers["X-Client-Certificate-Thumbprint"].ToString().ToUpper();
+            var clientThumbprint = request.Headers["X-Client-Certificate-Thumbprint"].ToString();
             if (string.IsNullOrEmpty(clientThumbprint))
             {
                 logger.LogError("No client certificate found");
@@ -36,10 +38,10 @@ namespace CovidCertificate.Backend.DASigningService.Services
                 return;
             }
 
-            if (!(regionConfig.AllowedThumbprints?.Contains(clientThumbprint) ?? false))
+            if (!(regionConfig.AllowedThumbprints?.Contains(clientThumbprint, StringComparer.OrdinalIgnoreCase) ?? false))
             {
-                errorHandler.AddError(ErrorCode.INVALID_CLIENT_CERTIFICATE, $"Thumbprint ({clientThumbprint}) does not belong to region's ({regionConfig.SubscriptionKeyIdentifier}) allowed thumbprints");
-                throw new ThumbprintNotAllowedException($"Thumbprint does not belong to region's ({regionConfig.SubscriptionKeyIdentifier}) allowed thumbprints");
+                errorHandler.AddError(ErrorCode.INVALID_CLIENT_CERTIFICATE, $"Thumbprint ({clientThumbprint}) does not belong to region's ({regionConfig.SubscriptionKeyIdentifier}) allowed thumbprints - {string.Join(',', regionConfig.AllowedThumbprints)}");
+                throw new ThumbprintNotAllowedException($"Thumbprint ({clientThumbprint}) does not belong to region's ({regionConfig.SubscriptionKeyIdentifier}) allowed thumbprints - {string.Join(',', regionConfig.AllowedThumbprints)}");
             }
 
             logger.LogDebug("Thumbprint Validated.");

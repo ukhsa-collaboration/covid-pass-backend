@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CovidCertificate.Backend.Interfaces;
+using CovidCertificate.Backend.Interfaces.Redis;
 using CovidCertificate.Backend.Models.DataModels;
 using CovidCertificate.Backend.Models.Enums;
 using CovidCertificate.Backend.Models.Settings;

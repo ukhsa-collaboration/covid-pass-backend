@@ -78,7 +78,7 @@ namespace CovidCertificate.Backend.Configuration.Bases
             builder.Services.AddSingleton(typeof(IBlobFilesInMemoryCache<>), typeof(BlobFilesInMemoryCache<>));
             builder.Services.AddSingleton<IBlobService, BlobService>();
             builder.Services.AddSingleton<IQueueService, ServiceBusQueueService>();
-            builder.Services.AddSingleton<IRedisCacheService, RedisCacheService>();
+            builder.Services.AddRedisCacheServices();
             builder.Services.AddSingleton<IMemoryCacheService, MemoryCacheService>();
             builder.Services.AddSingleton<IValueSetService, ValueSetService>();
             builder.Services.AddSingleton<IDateTimeProviderService, DateTimeProviderService>();

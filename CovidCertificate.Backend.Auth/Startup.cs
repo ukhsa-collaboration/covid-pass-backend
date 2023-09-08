@@ -15,6 +15,7 @@ using CovidCertificate.Backend.Interfaces.JwtServices;
 using CovidCertificate.Backend.Services.GracePeriodServices;
 using CovidCertificate.Backend.Interfaces.TwoFactor;
 using CovidCertificate.Backend.Services.Notifications;
+using CovidCertificate.Backend.Configuration.DIExtensions;
 
 [assembly: FunctionsStartup(typeof(Startup))]
 
@@ -33,6 +34,8 @@ namespace CovidCertificate.Backend.Auth
 
         public override void SetupFunctionSpecificDependencyInjection(IFunctionsHostBuilder builder)
         {
+            builder.Services.AddEndpointValidationServices();
+
             builder.Services.AddSingleton<INhsLoginService, NhsLoginService>();
             builder.Services.AddSingleton<ISmsService, NHSSmsService>();
             builder.Services.AddScoped<IAssertedLoginIdentityService, AssertedLoginIdentityService>();
@@ -42,9 +45,8 @@ namespace CovidCertificate.Backend.Auth
             builder.Services.AddSingleton<IUserConfigurationService, UserConfigurationService>();
             builder.Services.AddSingleton<IUserPreferenceService, UserPreferenceService>();
             builder.Services.AddSingleton<IUserPolicyService, UserPolicyService>();
-            builder.Services.AddSingleton<IGracePeriodService, GracePeriodService>();
             builder.Services.AddSingleton<IGracePeriodCache, GracePeriodCache>();
-            builder.Services.AddSingleton<IEndpointAuthorizationService, EndpointAuthorizationService>();
+            builder.Services.AddSingleton<IGracePeriodService, GracePeriodService>();
             builder.Services.AddSingleton<IPostEndpointValidationService, PostEndpointValidationService>();
         }
     }

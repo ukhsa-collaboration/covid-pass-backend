@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using CovidCertificate.Backend.Interfaces;
+using CovidCertificate.Backend.Interfaces.Redis;
 using CovidCertificate.Backend.Models.DataModels;
 using CovidCertificate.Backend.NhsApiIntegration.Interfaces;
 using Microsoft.Extensions.Logging;

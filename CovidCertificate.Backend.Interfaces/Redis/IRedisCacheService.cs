@@ -1,7 +1,7 @@
 ﻿using CovidCertificate.Backend.Models.Settings;
 using System.Threading.Tasks;
 
-namespace CovidCertificate.Backend.Interfaces
+namespace CovidCertificate.Backend.Interfaces.Redis
 {
     public interface IRedisCacheService
     {

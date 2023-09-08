@@ -10,6 +10,7 @@ using Hl7.Fhir.Model;
 using CovidCertificate.Backend.Models.Exceptions;
 using System.Linq;
 using CovidCertificate.Backend.NhsApiIntegration.Interfaces;
+using CovidCertificate.Backend.Interfaces.Redis;
 
 namespace CovidCertificate.Backend.Services
 {

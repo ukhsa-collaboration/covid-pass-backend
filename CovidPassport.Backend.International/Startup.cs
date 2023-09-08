@@ -48,6 +48,8 @@ namespace CovidCertificate.Backend.International
 
         public override void SetupFunctionSpecificDependencyInjection(IFunctionsHostBuilder builder)
         {
+            builder.Services.AddEndpointValidationServices();
+
             builder.Services.AddSingleton<ICBORFlow, CBORFlow>();
             builder.Services.AddSingleton<ICondensorService, CondensorService>();
             builder.Services.AddSingleton<IEncoderService, EncoderService>();
@@ -86,7 +88,6 @@ namespace CovidCertificate.Backend.International
             builder.Services.AddSingleton<IProofingLevelValidatorService, ProofingLevelValidatorService>();
 
             builder.Services.AddSingleton<IBoosterValidityService, BoosterValidityService>();
-            builder.Services.AddSingleton<IEndpointAuthorizationService, EndpointAuthorizationService>();
             builder.Services.AddSingleton<IPostEndpointValidationService, PostEndpointValidationService>();
             builder.Services.AddSingleton<IUnattendedSecurityService, UnattendedSecurityService>();
             builder.Services.AddSingleton<IInternationalCertificateWrapper, InternationalCertificateWrapper>();

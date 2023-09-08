@@ -69,7 +69,7 @@ namespace CovidCertificate.Backend.Services.Mappers
             {
                 if (device.Manufacturer != null && device.DeviceName != null && device.DeviceName.Any())
                 {
-                    testResult.TestKit = device.Manufacturer + ", " + device.DeviceName.FirstOrDefault().Name;
+                    testResult.TestKit = device.Manufacturer + ", " + device.DeviceName.FirstOrDefault()?.Name;
                 }
                 testResult.TestType = device.Identifier.Single(x => "http://loinc.org".Equals(x.System)).Value;
 

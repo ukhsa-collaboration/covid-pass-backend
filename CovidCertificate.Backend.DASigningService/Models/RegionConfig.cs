@@ -11,11 +11,6 @@ namespace CovidCertificate.Backend.DASigningService.Models
         public string IssuingCountry { get; set; }
         public string SigningCertificateIdentifier { get; set; }
         public string DefaultResultCountry { get; set; }
-        private List<string> _allowedThumbprints;
-        public List<string> AllowedThumbprints 
-        {
-            get { return _allowedThumbprints?.Select(x => x.ToUpper())?.ToList(); }
-            set { _allowedThumbprints = value; }
-        }
+        public List<string> AllowedThumbprints { get; set; }
 }
 }

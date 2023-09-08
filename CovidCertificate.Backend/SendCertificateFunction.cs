@@ -10,6 +10,7 @@ using CovidCertificate.Backend.Models.Helpers;
 using CovidCertificate.Backend.Models.RequestDtos;
 using CovidCertificate.Backend.Models.Validators;
 using CovidCertificate.Backend.Utils.Extensions;
+using CovidCertificate.Backend.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
@@ -25,6 +26,9 @@ using CovidCertificate.Backend.Utils;
 using Microsoft.OpenApi.Models;
 using CovidCertificate.Backend.Models.Exceptions;
 using CovidCertificate.Backend.Models.Interfaces;
+using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Abstractions;
+using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Resolvers;
+using Newtonsoft.Json.Serialization;
 
 namespace CovidCertificate.Backend
 {
@@ -49,7 +53,7 @@ namespace CovidCertificate.Backend
                                      ICovidCertificateService covidCertificateCreator,
                                      IConfiguration configuration, IGetTimeZones timeZones,
                                      IEmailLimiter emailLimiter,
-                                     IFeatureManager featureManager, 
+                                     IFeatureManager featureManager,
                                      IManagementInformationReportingService miReportingService,
                                      IEndpointAuthorizationService endpointAuthorizationService,
                                      IPostEndpointValidationService postEndpointValidationService,
@@ -74,6 +78,7 @@ namespace CovidCertificate.Backend
         [OpenApiSecurity("Ocp-Apim-Subscription-Key", SecuritySchemeType.ApiKey, Name = "Ocp-Apim-Subscription-Key", In = OpenApiSecurityLocationType.Header)]
         [OpenApiSecurity("id-token", SecuritySchemeType.ApiKey, Name = "id-token", In = OpenApiSecurityLocationType.Header)]
         [OpenApiSecurity("authorization", SecuritySchemeType.ApiKey, Name = "authorization", In = OpenApiSecurityLocationType.Header)]
+        [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(SendCertificateRequestModel), Example = typeof(SendCertificateRequestModelExample))]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(IActionResult), Description = "The OK response")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.NoContent, contentType: "text/plain", bodyType: typeof(string), Description = "The no content response")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.TooManyRequests, contentType: "text/plain", bodyType: typeof(string), Description = "The too many requests response")]
@@ -152,7 +157,7 @@ namespace CovidCertificate.Backend
                     ? $"{templateLanguage}{mandatoryToggle}-wales-only"
                     : templateLanguage + mandatoryToggle;
 
-            logger.LogTraceAndDebug($"Template Name is {templateName }");
+            logger.LogTraceAndDebug($"Template Name is {templateName}");
 
 
             var pdfDto = new AddPdfCertificateRequestDto
@@ -250,6 +255,20 @@ namespace CovidCertificate.Backend
             {
                 throw new DisabledException("This endpoint has been disabled");
             }
+        }
+    }
+    public class SendCertificateRequestModelExample : OpenApiExample<SendCertificateRequestModel>
+    {
+        public override IOpenApiExample<SendCertificateRequestModel> Build(NamingStrategy namingStrategy = null)
+        {
+            this.Examples.Add(
+                OpenApiExampleResolver.Resolve(
+                    "sample1",
+                    new SendCertificateRequestModel("Email to send to."),
+                    namingStrategy
+                ));
+
+            return this;
         }
     }
 }

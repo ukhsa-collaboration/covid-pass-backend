@@ -1,8 +1,6 @@
 ﻿using CovidCertificate.Backend.Interfaces;
 using CovidCertificate.Backend.Interfaces.Certificates;
 using CovidCertificate.Backend.Interfaces.DomesticExemptions;
-using CovidCertificate.Backend.NhsApiIntegration.Interfaces;
-using CovidCertificate.Backend.NhsApiIntegration.Services;
 using CovidCertificate.Backend.Services.Certificates;
 using CovidCertificate.Backend.Services.DomesticExemptions;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,11 +18,9 @@ namespace CovidCertificate.Backend.Configuration.DIExtensions
             services.AddSingleton<IDomesticExemptionsValidationService, DomesticExemptionsValidationService>();
             services.AddSingleton<ICsvToDomesticExemptionsParsingService, CsvToDomesticExemptionsParsingService>();
             services.AddSingleton<IClinicalTrialExemptionService, ClinicalTrialExemptionService>();
-            services.AddSingleton<IMedicalExemptionService, MedicalExemptionService>();
+            services.AddSingleton<IMedicalExemptionService, MedicalExemptionServiceMock>();
             services.AddSingleton<IDomesticExemptionRecordsService, DomesticExemptionCosmosService>();
-            services.AddSingleton<IMedicalExemptionApiService, MedicalExemptionApiService>();
             services.AddSingleton<IMiscExemptionService, MiscExemptionService>();
-            services.AddSingleton<IMedicalExemptionDataParser, MedicalExemptionParser>();
         }
     }
 }

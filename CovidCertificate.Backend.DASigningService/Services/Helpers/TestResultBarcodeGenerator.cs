@@ -84,7 +84,7 @@ namespace CovidCertificate.Backend.DASigningService.Services.Helpers
 
         protected override string GetCountry(Organization organization)
         {
-            return organization.Address.FirstOrDefault().Country;
+            return organization.Address.FirstOrDefault()?.Country;
         }
 
         protected async override Task<IEnumerable<IGenericResult>> GetResultsAsync(GenerateBarcodeResultFromFhirCommand command)

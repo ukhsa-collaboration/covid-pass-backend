@@ -1,4 +1,5 @@
 ﻿using CovidCertificate.Backend.Interfaces;
+using CovidCertificate.Backend.Interfaces.Redis;
 using CovidCertificate.Backend.Models.DataModels;
 using CovidCertificate.Backend.Models.Exceptions;
 using CovidCertificate.Backend.Models.Settings;

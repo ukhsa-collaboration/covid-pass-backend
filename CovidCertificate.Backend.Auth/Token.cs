@@ -6,14 +6,18 @@ using CovidCertificate.Backend.Interfaces;
 using CovidCertificate.Backend.Models.Exceptions;
 using CovidCertificate.Backend.Models.ResponseDtos;
 using CovidCertificate.Backend.Utils.Extensions;
+using CovidCertificate.Backend.Auth.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
+using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Abstractions;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
+using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Resolvers;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json.Serialization;
 
 namespace CovidCertificate.Backend.Auth
 {
@@ -33,6 +37,7 @@ namespace CovidCertificate.Backend.Auth
         [OpenApiSecurity("Ocp-Apim-Subscription-Key", SecuritySchemeType.ApiKey, Name = "Ocp-Apim-Subscription-Key", In = OpenApiSecurityLocationType.Header)]
         [OpenApiSecurity("id-token", SecuritySchemeType.ApiKey, Name = "id-token", In = OpenApiSecurityLocationType.Header)]
         [OpenApiSecurity("authorization", SecuritySchemeType.ApiKey, Name = "authorization", In = OpenApiSecurityLocationType.Header)]
+        [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(TokenRequestModel), Example = typeof(TokenRequestModelExample))]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(NhsLoginTokenResponse), Description = "The OK response")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadRequest, contentType: "text/plain", bodyType: typeof(string), Description = "The bad request response")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.Unauthorized, contentType: "text/plain", bodyType: typeof(string), Description = "The unauthorized response")]
@@ -80,6 +85,20 @@ namespace CovidCertificate.Backend.Auth
                 logger.LogError(e, e.Message);
                 return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
+        }
+    }
+    public class TokenRequestModelExample : OpenApiExample<TokenRequestModel>
+    {
+        public override IOpenApiExample<TokenRequestModel> Build(NamingStrategy namingStrategy = null)
+        {
+            this.Examples.Add(
+                OpenApiExampleResolver.Resolve(
+                    "sample1",
+                    new TokenRequestModel("code", "redirectUri"),
+                    namingStrategy
+                ));
+
+            return this;
         }
     }
 }

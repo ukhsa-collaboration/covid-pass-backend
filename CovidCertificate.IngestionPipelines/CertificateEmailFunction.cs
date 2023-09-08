@@ -66,7 +66,12 @@ namespace CovidCertificate.Backend.IngestionPipelines
                     {
                         EmailAddress = pdfRequest.Email,
                         Name = pdfRequest.Name,
-                        DocumentContent = NotificationClient.PrepareUpload(pdfRequest.PdfData)
+                        DocumentContent = NotificationClient.PrepareUpload(
+                            documentContents: pdfRequest.PdfData,
+                            isCsv: false,
+                            confirmEmailBeforeDownload: true,
+                            retentionPeriod: "12 weeks"
+                        )
                     };
 
                     var notificationTemplate = GetNotificationTemplateString(pdfRequest, false);

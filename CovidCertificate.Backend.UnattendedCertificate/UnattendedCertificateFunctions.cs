@@ -27,6 +27,13 @@ using Newtonsoft.Json;
 using CovidCertificate.Backend.UnattendedCertificate.Models;
 using CovidCertificate.Backend.Models.RequestDtos;
 using System.Text.RegularExpressions;
+using CovidCertificate.Backend.Models.ResponseDtos;
+using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
+using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
+using Microsoft.OpenApi.Models;
+using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Abstractions;
+using Newtonsoft.Json.Serialization;
+using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Resolvers;
 
 namespace CovidCertificate.Backend.UnattendedCertificate
 {
@@ -71,6 +78,12 @@ namespace CovidCertificate.Backend.UnattendedCertificate
         }
 
         [FunctionName(DomesticApiName)]
+        [OpenApiOperation(operationId: "UnattendedDomesticCertificate", tags: new[] { "Unattended Domestic" })]
+        [OpenApiParameter(name: "Ocp-Apim-Subscription-Key", In = ParameterLocation.Header, Required = true, Type = typeof(string))]
+        [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(UnattendedRequestModel), Example = typeof(UnattendedRequestModelExample))]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(VaccineResponse), Description = "The OK response")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadRequest, contentType: "text/plain", bodyType: typeof(string), Description = "The bad request response")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.InternalServerError, contentType: "text/plain", bodyType: typeof(string), Description = "The internal server error response")]
         public async Task<IActionResult> PostUnattendedDomesticCertificateAsync(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = "certificate/domestic")] HttpRequest req)
         {
@@ -82,6 +95,12 @@ namespace CovidCertificate.Backend.UnattendedCertificate
         }
 
         [FunctionName(VaccinationApiName)]
+        [OpenApiOperation(operationId: "UnattendedVaccinationCertificate", tags: new[] { "Unattended Vacination" })]
+        [OpenApiParameter(name: "Ocp-Apim-Subscription-Key", In = ParameterLocation.Header, Required = true, Type = typeof(string))]
+        [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(UnattendedRequestModel), Example = typeof(UnattendedRequestModelExample))]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(IntlVaccineResponse), Description = "The OK response")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadRequest, contentType: "text/plain", bodyType: typeof(string), Description = "The bad request response")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.InternalServerError, contentType: "text/plain", bodyType: typeof(string), Description = "The internal server error response")]
         public async Task<IActionResult> PostUnattendedVaccinationCertificateAsync(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = "certificate/vaccination")] HttpRequest req)
         {
@@ -107,7 +126,7 @@ namespace CovidCertificate.Backend.UnattendedCertificate
                 Connection = "ServiceBusConnectionString")] UnattendedPdfRequest myQueueItem)
         {
             var user = CreateUserFromPatient(FHIRDeserializer.Deserialize<Patient>(myQueueItem.FHIRPatient));
-            
+
             try
             {
                 var medicalRecords = await covidResultsService.GetMedicalResultsAsync(user, "", CertificateScenario.International, NhsdApiKey.Unattended);
@@ -115,14 +134,14 @@ namespace CovidCertificate.Backend.UnattendedCertificate
                 var vaccineCert = certificateContainerVaccine.GetSingleCertificateOrNull();
                 var certificateContainerRecovery = await covidCertificateService.GetInternationalUnattendedCertificateAsync(user, CertificateType.Recovery, medicalRecords);
                 var recoveryCert = certificateContainerRecovery.GetSingleCertificateOrNull();
-                
+
                 if (vaccineCert == null && recoveryCert == null)
                 {
                     throw new NoResultsException("Failure to generate pdf, failure message sent");
                 }
-                
+
                 logger.LogInformation("Certificate(s) found, generating pdf content");
-                
+
                 var pdfContent = await pdfContentGenerator.GenerateInternationalAsync(
                     covidPassportUser: user,
                     vaccinationCertificate: vaccineCert,
@@ -133,7 +152,7 @@ namespace CovidCertificate.Backend.UnattendedCertificate
                 ); //dosenumber -1 will print all vaccines
 
                 logger.LogInformation("PDF content generated");
-                
+
                 var emailContent = new PdfGenerationRequestInternationalDto
                 {
                     Email = myQueueItem.EmailToSendTo,
@@ -141,9 +160,9 @@ namespace CovidCertificate.Backend.UnattendedCertificate
                     Name = user.Name,
                     LanguageCode = "en"
                 };
-                
+
                 await queueService.SendMessageAsync("send_certificate_request_int", emailContent);
-                
+
                 logger.LogInformation("Email has finished");
             }
             catch (Exception e) when (e is NoResultsException || e is NoUnattendedVaccinesFoundException)
@@ -180,6 +199,12 @@ namespace CovidCertificate.Backend.UnattendedCertificate
         }
 
         [FunctionName(RecoveryApiName)]
+        [OpenApiOperation(operationId: "UnattendedRecoveryCertificate", tags: new[] { "Unattended Recovery" })]
+        [OpenApiParameter(name: "Ocp-Apim-Subscription-Key", In = ParameterLocation.Header, Required = true, Type = typeof(string))]
+        [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(UnattendedRequestModel), Example = typeof(UnattendedRequestModelExample))]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(IntlRecoveryResponse), Description = "The OK response")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadRequest, contentType: "text/plain", bodyType: typeof(string), Description = "The bad request response")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.InternalServerError, contentType: "text/plain", bodyType: typeof(string), Description = "The internal server error response")]
         public async Task<IActionResult> PostUnattendedRecoveryCertificateAsync(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = "certificate/recovery")] HttpRequest req)
         {
@@ -240,8 +265,8 @@ namespace CovidCertificate.Backend.UnattendedCertificate
         private bool PatientHasInvalidCharsInName(Patient patient)
         {
             string regex = @"([&*()_=+""£$¬`|/@:;,<>[\]#!?~)])|([-']{2})";
-            var foreName = patient.Name.FirstOrDefault().Given.FirstOrDefault().ToString();
-            var familyName = patient.Name.FirstOrDefault().Family.ToString();
+            var foreName = patient.Name.FirstOrDefault()?.Given.FirstOrDefault()?.ToString();
+            var familyName = patient.Name.FirstOrDefault()?.Family.ToString();
             var invalidCharsForename = Regex.Match(foreName, regex);
             var invalidCharsFamilyName = Regex.Match(familyName, regex);
 
@@ -326,7 +351,7 @@ namespace CovidCertificate.Backend.UnattendedCertificate
                 badRequestResult = new BadRequestObjectResult(
                     new Error()
                     {
-                        ErrorCode = validationResult.Errors.FirstOrDefault().ErrorCode
+                        ErrorCode = validationResult.Errors.FirstOrDefault()?.ErrorCode
                     });
                 return badRequestResult;
             }
@@ -425,4 +450,20 @@ namespace CovidCertificate.Backend.UnattendedCertificate
             return new OkObjectResult(result);
         }
     }
+
+    public class UnattendedRequestModelExample : OpenApiExample<UnattendedRequestModel>
+    {
+        public override IOpenApiExample<UnattendedRequestModel> Build(NamingStrategy namingStrategy = null)
+        {
+            this.Examples.Add(
+                OpenApiExampleResolver.Resolve(
+                    "sample1",
+                    new UnattendedRequestModel(),
+                    namingStrategy
+                ));
+
+            return this;
+        }
+    }
+
 }

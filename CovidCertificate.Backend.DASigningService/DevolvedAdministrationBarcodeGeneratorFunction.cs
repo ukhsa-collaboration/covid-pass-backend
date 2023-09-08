@@ -27,6 +27,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using Microsoft.Extensions.Logging;
 using Microsoft.FeatureManagement;
+using CovidCertificate.Backend.DASigningService.Models.Exceptions;
+using CovidCertificate.Backend.Interfaces.DateTimeProvider;
+using CovidCertificate.Backend.Models.Helpers;
+using CovidCertificate.Backend.Utils.Constants;
+using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Abstractions;
+using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Resolvers;
+using Newtonsoft.Json.Serialization;
 using Microsoft.OpenApi.Models;
 using BarcodeResults = CovidCertificate.Backend.DASigningService.Responses.BarcodeResults;
 
@@ -73,8 +80,9 @@ namespace CovidCertificate.Backend.DASigningService
 
         [FunctionName(RecoveryApiName)]
         [OpenApiOperation(operationId: RecoveryApiName, tags: new[] { "Create Barcode" })]
-        [OpenApiSecurity("Ocp-Apim-Subscription-Key", SecuritySchemeType.ApiKey, Name = "Ocp-Apim-Subscription-Key", In = OpenApiSecurityLocationType.Header)]
-        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(string), Description = "The OK response")]
+        [OpenApiParameter(name: "Ocp-Apim-Subscription-Key", In = ParameterLocation.Header, Required = true, Type = typeof(string))]
+        [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(VaccinationRequestPayload), Example = typeof(VaccinationRequestExample))]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(BarcodeResults), Description = "The OK response")]
         public async Task<IActionResult> Create2DRecoveryBarcode([HttpTrigger(AuthorizationLevel.Function, "post", Route = "recovery/2dbarcode")] HttpRequest req)
         {
             return await Create2DBarcodeAsync(req, CertificateType.Recovery, RecoveryApiName);
@@ -82,8 +90,9 @@ namespace CovidCertificate.Backend.DASigningService
 
         [FunctionName(VaccinationApiName)]
         [OpenApiOperation(operationId: VaccinationApiName, tags: new[] { "Create Barcode" })]
-        [OpenApiSecurity("Ocp-Apim-Subscription-Key", SecuritySchemeType.ApiKey, Name = "Ocp-Apim-Subscription-Key", In = OpenApiSecurityLocationType.Header)]
-        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(string), Description = "The OK response")]
+        [OpenApiParameter(name: "Ocp-Apim-Subscription-Key", In = ParameterLocation.Header, Required = true, Type = typeof(string))]
+        [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(VaccinationRequestPayload), Example = typeof(VaccinationRequestExample))]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(BarcodeResults), Description = "The OK response")]
         public async Task<IActionResult> Create2DVaccinationBarcode([HttpTrigger(AuthorizationLevel.Function, "post", Route = "vaccinations/2dbarcode")] HttpRequest req)
         {
             return await Create2DBarcodeAsync(req, CertificateType.Vaccination, VaccinationApiName);
@@ -91,8 +100,9 @@ namespace CovidCertificate.Backend.DASigningService
 
         [FunctionName(DomesticApiName)]
         [OpenApiOperation(operationId: DomesticApiName, tags: new[] { "Create Barcode" })]
-        [OpenApiSecurity("Ocp-Apim-Subscription-Key", SecuritySchemeType.ApiKey, Name = "Ocp-Apim-Subscription-Key", In = OpenApiSecurityLocationType.Header)]
-        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(string), Description = "The OK response")]
+        [OpenApiParameter(name: "Ocp-Apim-Subscription-Key", In = ParameterLocation.Header, Required = true, Type = typeof(string))]
+        [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(VaccinationRequestPayload), Example = typeof(VaccinationRequestExample))]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(BarcodeResults), Description = "The OK response")]
         public async Task<IActionResult> Create2DDomesticBarcode([HttpTrigger(AuthorizationLevel.Function, "post", Route = "domestic/2dbarcode")] HttpRequest req)
         {
             if (!await featureManager.IsEnabledAsync(FeatureFlags.EnableDomestic))
@@ -135,7 +145,6 @@ namespace CovidCertificate.Backend.DASigningService
                 if (errorHandler.HasErrors())
                 {
                     logger.LogError("Errors found after Validating Thumbprint.");
-
                     return new BadRequestObjectResult(new BarcodeResults { Errors = errorHandler.Errors });
                 }
 
@@ -299,6 +308,20 @@ namespace CovidCertificate.Backend.DASigningService
             }
 
             return new Tuple<bool, BadRequestObjectResult>(true, null);
+        }
+    }
+    public class VaccinationRequestExample : OpenApiExample<VaccinationRequestPayload>
+    {
+        public override IOpenApiExample<VaccinationRequestPayload> Build(NamingStrategy namingStrategy = null)
+        {
+            this.Examples.Add(
+                OpenApiExampleResolver.Resolve(
+                    "sample1",
+                    new VaccinationRequestPayload(),
+                    namingStrategy
+                ));
+
+            return this;
         }
     }
 }

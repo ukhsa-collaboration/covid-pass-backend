@@ -9,6 +9,7 @@ using CovidCertificate.Backend.NhsApiIntegration.Interfaces;
 using CovidCertificate.Backend.Models.Settings;
 using CovidCertificate.Backend.Utils;
 using Microsoft.FeatureManagement;
+using CovidCertificate.Backend.Interfaces.Redis;
 
 namespace CovidCertificate.Backend.Services
 {

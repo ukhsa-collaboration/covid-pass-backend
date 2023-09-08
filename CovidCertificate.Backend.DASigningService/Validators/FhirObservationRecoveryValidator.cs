@@ -50,7 +50,7 @@ namespace CovidCertificate.Backend.DASigningService.Validators
                         ErrorCode.FHIR_OBSERVATION_VALUE_CODE_MISSING.ToString(StringUtils.NumberFormattedEnumFormat));
 
             RuleFor(x => ((CodeableConcept)x.Value).Coding.FirstOrDefault().Code).Cascade(CascadeMode.Stop).Equal("1240581000000104")
-                .When(x => x.Value != null && ((CodeableConcept)x.Value).Coding != null && ((CodeableConcept)x.Value).Coding.FirstOrDefault() != null && ((CodeableConcept)x.Value).Coding.FirstOrDefault().Code != null)
+                .When(x => x.Value != null && ((CodeableConcept)x.Value).Coding != null && ((CodeableConcept)x.Value).Coding.FirstOrDefault() != null && ((CodeableConcept)x.Value).Coding.FirstOrDefault()?.Code != null)
                 .WithMessage("Observation.ValueCodableConcept.Coding[0].Code invalid.")
                 .WithErrorCode(
                         ErrorCode.FHIR_OBSERVATION_VALUE_CODE_INVALID.ToString(StringUtils.NumberFormattedEnumFormat));

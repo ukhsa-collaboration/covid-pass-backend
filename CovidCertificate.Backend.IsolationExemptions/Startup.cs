@@ -39,14 +39,11 @@ namespace CovidCertificate.Backend.IsolationExemptions
 
         public override void SetupFunctionSpecificDependencyInjection(IFunctionsHostBuilder builder)
         {
-            builder.Services.AddScoped<IMedicalExemptionService, UnattendedMedicalExemptionService>();
+            builder.Services.AddScoped<IMedicalExemptionService, MedicalExemptionServiceMock>();
             builder.Services.AddSingleton<IDomesticExemptionCache, DomesticExemptionCache>();
             builder.Services.AddScoped<IClinicalTrialExemptionService, ClinicalTrialExemptionService>();
             builder.Services.AddScoped<IDomesticExemptionRecordsService, DomesticExemptionCosmosService>();
-            builder.Services.AddScoped<IMedicalExemptionApiService, MedicalExemptionApiService>();
-            builder.Services.AddScoped<IMedicalExemptionDataParser, MedicalExemptionParser>();
             builder.Services.AddSingleton<INhsTestResultsHistoryApiAccessTokenService, NhsTestResultsHistoryApiAccessTokenService>();
-            builder.Services.AddSingleton<IRedisCacheService, RedisCacheService>();
             builder.Services.AddSingleton<INhsdFhirApiService, NhsdFhirApiService>();
             builder.Services.AddScoped<IIsolationExemptionStatusService, IsolationExemptionStatusService>();
             builder.Services.AddSingleton<IConfigurationValidityCalculator, ConfigurationValidityCalculator>();

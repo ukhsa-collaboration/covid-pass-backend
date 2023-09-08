@@ -1,5 +1,4 @@
-﻿using CovidCertificate.Backend.Interfaces;
-using CovidCertificate.Backend.Models.Settings;
+﻿using CovidCertificate.Backend.Models.Settings;
 using CovidCertificate.Backend.Utils.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -13,11 +12,12 @@ using System.Linq;
 using System.Security.Authentication;
 using System.Threading.Tasks;
 using CovidCertificate.Backend.Interfaces.ModelVersioning;
+using CovidCertificate.Backend.Interfaces.Redis;
 using CovidCertificate.Backend.Models.Helpers;
 
-namespace CovidCertificate.Backend.Services
+namespace CovidCertificate.Backend.Services.Redis
 {
-    public class RedisCacheService : IRedisCacheService
+    public class RedisCacheServiceOld : IRedisCacheService
     {
         private readonly ILogger<RedisCacheService> logger;
         private static IConfiguration configuration;
@@ -25,10 +25,10 @@ namespace CovidCertificate.Backend.Services
         private readonly IFeatureManager featureManager;
         private readonly IModelVersionService modelVersionService;
 
-        public RedisCacheService(
-            ILogger<RedisCacheService> _logger, 
-            IConfiguration _configuration, 
-            IFeatureManager _featureManager, 
+        public RedisCacheServiceOld(
+            ILogger<RedisCacheService> _logger,
+            IConfiguration _configuration,
+            IFeatureManager _featureManager,
             IModelVersionService modelVersionService)
         {
             logger = _logger;
@@ -104,14 +104,14 @@ namespace CovidCertificate.Backend.Services
         private TimeSpan GetExpirationTime(RedisLifeSpanLevel redisLifeSpanLevel)
             => redisLifeSpanLevel switch
             {
-                RedisLifeSpanLevel.FiveMinutes =>  TimeSpan.FromMinutes(5),
+                RedisLifeSpanLevel.FiveMinutes => TimeSpan.FromMinutes(5),
                 RedisLifeSpanLevel.ThirtyMinutes => TimeSpan.FromMinutes(30),
                 RedisLifeSpanLevel.OneHour => TimeSpan.FromHours(1),
                 RedisLifeSpanLevel.TenHours => TimeSpan.FromHours(10),
                 RedisLifeSpanLevel.OneDay => TimeSpan.FromDays(1),
                 _ => TimeSpan.FromMinutes(5),
             };
-        
+
         public async Task<bool> AddKeyAsync<T>(string key, T value, RedisLifeSpanLevel redisLifeSpanLevel)
         {
             if (!await featureManager.IsEnabledAsync(FeatureFlags.RedisEnabled))

@@ -52,5 +52,15 @@ namespace CovidCertificate.Backend.Utils
 
             return age;
         }
+
+        public static bool AgeIsBelowLimit(DateTime dateOfBirthInUTC, int ageLimit)
+        {
+            var age = DateUtils.GetAgeInYears(dateOfBirthInUTC);
+
+            if (age < ageLimit)
+                return true;
+
+            return false;
+        }
     }
 }
